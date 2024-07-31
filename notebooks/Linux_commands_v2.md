@@ -1,6 +1,6 @@
-# LIST OF GNU/LINUX BASH COMMANDS AND WAYS TO DO COMMON STUFF
+# LIST OF GNU/LINUX BASH COMMANDS AND FEATURES
 
-## - Wildcards, expansions and autofill
+## Wildcards, expansions and autofill
 
 ### `*`
 
@@ -21,13 +21,13 @@ In the first example the `ls` command will return all files with a `.txt` extens
 
 In the second example all files in the specified path with "image" in their name are retrieved, regardless of file type or any other character in the name (so `image_01.png`,  `image_02.jpg` and `images/` are all eligible targets).
 
-The third example shows a use for `*` in-bethween characters: since the asterisk expands to zero or more characters, all `.png` files with "picture" in their name are retrieved, so `picture_01.png`, `picture_3a.png` and even just `picture.png` would be eligible targets, for example.
+The third example uses `*` in-between characters: since the asterisk expands to zero or more characters, all `.png` files whose name start with "picture" are retrieved, so `picture_01.png`, `picture_3a.png` and even just `picture.png` would be eligible targets.
 
 The last example uses the asterisk to copy all contents of a directory.
 
 ### `?`
 
-The question mark wildcard is just like `*`, but only expands to one character. It also ignores hidden files.
+The question mark wildcard works just like `*`, but only expands to one character. It also ignores hidden files.
 
 ### `[]`
 
@@ -35,96 +35,104 @@ The square brackets wildcard is used to match all objects with names that have c
 
 Example: `zmays[A-F].fastq` would retrieve `zmaysA.fastq`, `zmaysB.fastq`, `zmaysC.fastq` etc. all the way to "F".
 
-It can be used either with an alphanumeric range (`[A-Z]` or `[0-9]`) or by specifying the characters in the range (*e.g.*: `zmays[UVWX].fastq`). Since `[]` only supports characters, it doesn't work for numbers higher than 9, since they contain more than one character.
+It can be used either with an alphanumeric range (`[A-Z]` or `[0-9]`) or by specifying the characters in the range (*e.g.*: `zmays[UVWX].fastq`). Since `[]` only supports characters, it doesn't work for numbers higher than 9, which contain more than one digit.
 
-The syntax for `[]` is more strict than that of other wildcards: to use this wildcard to the fullest, it's necessary to work in a reproducible way (for instance, the example used above works wonders if we saved the FASTQs with progressive alphabetic names, but if we don't know what to look for, we would need to use `*`s on both sides of the expression, effectively vanifying the usage of brackets).
+The syntax for `[]` is more strict than that of other wildcards: to use this wildcard to the fullest, it's necessary to work in a reproducible way.
 
 ### `{}`
 
-Brace expansion. A type of Shell expansion to include multiple elements in an argument. It's used like the `[]` wildcard, but the syntax is a bit different, since it can include words and elements formed by more than one character each, special characters and numbers with more than one character; different elements of the list are divided by `,` without spaces, while alphanumeric ranges use `..` instead of `-` (`{10..13}` as opposed to `[0-9]`). Does not care whether a corresponding file or directory exists or not (see examples in [`mkdir` section](#mkdir)).
+Brace expansion. A type of Shell expansion to include multiple elements in an argument. It's used like the `[]` wildcard, but the syntax is a bit different:
+- it can include words and elements formed by more than one character, special characters and numbers with more than one digit;
+- different elements of the list are divided by `,` without spaces, while alphanumeric ranges use `..` instead of `-` (`{10..13}` as opposed to `[0-9]`);
+- does not care whether a matching item exists or not (see examples in [`mkdir` section](#mkdir)).
 
 ### TAB
 
 Autofill: autocompletes the command, reserved word or file name if enough characters have been written (in case of words with the same characters, TAB will autocomplete up to the closest "branch" to distinguish words/names).
 
-> **NOTE 1:** wildcards (`*`, `?` and `[]`) only expand to existing files that match them, while brace expansions (`{}`) will always expand regardless of whether corresponding files or directories exist or not (which is why the latter can also be used to create new directories, directory structure and files).*
+---
+
+> **NOTE 1:** the wildcards (`*`, `?` and `[]`) only expand to existing files that match them, while brace expansions (`{}`) will always expand regardless of whether corresponding files or directories exist or not (which is why the latter can also be used to create new directories, directory structure and files).
 
 > **NOTE 2:** hidden files in Linux are all those files whose names start with a period (*e.g.:* `.hidden_file.txt`).
 
-## - Keybard shortcuts in Linux (distro-dependent)
+## Keybard shortcuts (distro-dependent)
 
-### **Ctrl+Alt+T**
+### System-wide
+
+#### **`Ctrl`+`Alt`+`T`**
 
 Opens Terminal.
 
-### **Ctrl+Alt+up_arrow**
+#### **`Ctrl`+`Alt`+`up_arrow`**
 
-Shows all workspaces. Press Either Ctrl+Alt+down_arrow or Ctrl+Alt+up_arrow again to go back.
+Shows all workspaces. Press either `Ctrl`+`Alt`+`down_arrow` or `Ctrl`+`Alt`+`up_arrow` again to go back.
 
-### **Ctrl+Alt+left/right_arrow**
+#### **`Ctrl`+`Alt`+`left`/`right_arrow`**
 
 Navigate workspaces.
 
-### **Ctrl+Alt+down_arrow**
+#### **`Ctrl`+`Alt`+`down_arrow`**
 
-Shows windows in current workspace. Press Either Ctrl+Alt+up_arrow or Ctrl+Alt+down_arrow again to go back or left/right arrows to move between windows.
+Shows windows in current workspace. Press either `Ctrl`+`Alt`+`up_arrow` or `Ctrl`+`Alt`+`down_arrow` again to go back or `left`/`right` arrows to navigate windows.
 
-### **Super_Key+arrows**
+#### **`Super_Key`+ arrows**
 
 Anchors active window to matching desktop side.
 
-### **Super_Key+D**
+#### **`Super_Key`+`D`**
 
-Puts down all windows.
+Reduces all windows.
 
-### **Alt+F4**
+#### **`Alt`+`F4`**
 
 Closes active window.
 
-### **Alt+TAB**
+#### **`Alt`+`TAB`**
 
-Cycle between programs and windows in current workspace.
+Cycles windows in current workspace.
 
-### **Ctrl+Alt+L**
+#### **`Ctrl`+`Alt`+`L`**
 
-Locks current session (also **Super_Key+L** in some distros).
+Locks current session (also **`Super_Key`+`L`** in some distros).
 
-### **Alt+F10**
+#### **`Alt`+`F10`**
 
-Maximise/minimise window (to minimise window **Alt+F5** is equivalent).
+Maximise/minimise window (to minimise window **`Alt`+`F5`** is equivalent).
 
-## - Shell
+### Shell shortcuts
 
-### **Ctrl+C**
+#### **`Ctrl`+`C`**
 
 Quits a running program and gives back the command prompt (soft kill). Usually for programs that hang or keep giving output.
-Some running programs may require a different input to exit (*e.g.*: "q" for `man` or `htop`, Ctrl+X or Esc+x for Nano, Esc to get back to "normal mode" in Vim...).
 
-### **Ctrl+Z**
+Some running programs may require a different input to exit (*e.g.*: `q` for `man` or `htop`, `Ctrl`+`X` or `Esc`+`X` for `Nano`, *etc*...).
+
+#### **`Ctrl`+`Z`**
 
 Suspends a running foreground program (check [`bg` command](#bg)).
 
-### **Alt+A**
+#### **`Alt`+`A`**
 
-Go to the beginning of the line (equal to Fn+left_arrow. Depending on the device they may be alternative or both available).
+Go to the beginning of the line (equal to `Fn`+`left_arrow`. Depending on the device they may be alternative or both available).
 
-### **Alt+E**
+#### **`Alt`+`E`**
 
-Go to end of the line (equal to Fn+right_arrow. Depending on the device they may be alternative or both available).
+Go to end of the line (equal to `Fn`+`right_arrow`. Depending on the device they may be alternative or both available).
 
-### **Shift+Ctrl+C/V**
+#### **`Shift`+`Ctrl`+`C`/`V`**
 
 Copy/paste in terminal.
 
-### **Ctrl+L**
+#### **`Ctrl`+`L`**
 
-Executes the `clear` command.
+Executes the [`clear`](#clear) command.
 
-### **Ctrl+R**
+#### **`Ctrl`+`R`**
 
 Searches in Bash's [history](#history) (**history's reverse search**).
 
-## - System Variables
+## System Variables
 
 *System variables are special variables that are reserved to the system, since they hold a special meaning for the OS. They are all written in capital letters.*
 
