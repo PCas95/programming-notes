@@ -60,6 +60,8 @@ Autofill: autocompletes the command, reserved word or file name if enough charac
 
 ### System-wide
 
+> Some keyboard shortcuts are universal for GNU/Linux operative systems, or at least shared among those based on the same system, like Debian-based distributions. Others shortcuts may be distro-specific. This notebook takes in consideration shortcuts available in Linux Mint, with some notes on alternatives in Ubuntu.
+
 #### **`Ctrl`+`Alt`+`T`**
 
 Opens Terminal.
@@ -134,7 +136,7 @@ Searches in Bash's [history](#history) (**history's reverse search**).
 
 ## System Variables
 
-*System variables are special variables that are reserved to the system, since they hold a special meaning for the OS. They are all written in capital letters.*
+System variables are special variables that are reserved to the system, since they hold a special meaning for the OS. They are all written in capital letters. The content of a System Variable can be displayed using the [`echo`](#echo] command.
 
 ### `$HOME`
 
@@ -142,15 +144,15 @@ Current user's home directory path.
 
 ### `$PATH`
 
-A list of directories to search for commands (meaning where commands *reside* and where the system *looks for* commands). In order for a script (Bash or any language) to be run simply by typing its name in the terminal, the directory in which it is stored must be added to the system's `$PATH` (check [`export`](#export) to do that).
+A list of directories where the system can search for commands, (*i.e.* a list of directories where commands *reside* and where the system *looks for* them). In order for a script (Bash or any other language) to be run simply by typing its name in the terminal, the directory in which the program is stored must be added to the system's `$PATH` (check [`export`](#export) to do that).
 
 ### `$PS1`
 
-The primary command prompt (normally `$`, `#` for root, in bash also `[\u@\h\W]$`, which is more complex and tells additional information).
+The primary command prompt (normally `$`, `#` for root, in bash also `[\u@\h\W]$`, which is more complex and tells additional information about the logged-in user and its permissions).
 
 ### `$PS2`
 
-A secondary prompt, usually `>`, used when prompting for additional information, like when prompting for further input, like a password, or after a `\`.
+A secondary prompt, usually `>`, used when prompting for additional information, like when further input is needed, like when requiring a password, after a `\`, or when a loop or condition needs to be completed.
 
 ### `$O`
 
@@ -838,7 +840,7 @@ In Linux Mint, Gedit is pre-installed alongside Xed, Mint's default text editor 
 
 ### `clear`
 
-Clears the terminal screen. (Keyboard shortcut [Ctrl+L](#ctrll)).
+Clears the terminal screen. (Keyboard shortcut [`Ctrl`+`L`](#ctrll)).
 
 ### `touch`
 
