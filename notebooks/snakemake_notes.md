@@ -59,7 +59,7 @@ snakemake --help | less -S
 conda deactivate
 ```
 
-## Running Snakefile workflows
+## Writing and Running Snakefile Workflows
 
 Snakemake workflow's instructions are written in a `Snakefile` file. Examples of `Snakefile`:
 
@@ -87,6 +87,8 @@ rule my_first_rule:
 
 ### Rules
 
+<https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html>
+
 The basic building block of a Snakefile is the `rule`. A `rule` block will contain information about the "step" of a workflow or pipeline, which can be composed by many of such steps, connected to one another and able to use as inputs the outputs from other blocks.
 
 Each `rule` can contain information like dedicated memory or CPUs (in specific blocks of code from keywords like `threads`), and is made of 3 other main blocks, with keywords `input`, `output` and `shell`.
@@ -111,7 +113,7 @@ Snakemake also provides a `wrapper` keyword, used to create a block of code in a
 
 Usually the first part of a Snakefile is a `rule all` block. `rule all` has an `input` block, used to specify the ultimate targets of the workflow. Snakemake will work backwards from these targets to determine which other rules need to be executed and in what order, so that the files listed in the `rule all`'s `input` block can be created.
 
-In the example below, the firt block of code is a `rule all` block. Its `input` block specifies that the final outputs that need to be produced by the workflow are `data/output/file1.txt` and `data/output/file2.txt`. After that rule, other rules are present in the workflow, which will be executed as needed to produce the target files. In this case only another rule is listed: `rule convert` takes as input all `.txt` files in `data/input` to produce files with the same names in `data/output`; to do that, it will run the Python script `convert_to_uppercase.py` as specified in the `shell` block.
+In the example below, the first block of code is a `rule all` block. Its `input` block specifies that the final outputs that need to be produced by the workflow are `data/output/file1.txt` and `data/output/file2.txt`. After that rule, other rules are present in the workflow, which will be executed as needed to produce the target files. In this case only another rule is listed: `rule convert` takes as input all `.txt` files in `data/input` to produce files with the same names in `data/output`; to do that, it will run the Python script `convert_to_uppercase.py` as specified in the `shell` block.
 
 ```py
 rule all:
@@ -127,6 +129,8 @@ rule convert:
 	shell:
 		"python convert_to_uppercase.py {input} {output}"
 ```
+
+> A rule's name is usefule to reference it later on, and to describe what's inside it, but Snakemake does not necessarily need rule names: a nameless rule is called "implicit rule" (`rule:`).
 
 ### Configuring resources
 
@@ -193,15 +197,14 @@ resources:
 	gpu: 1
 ```
 
-
-# QUI
-
 ### Wildcards and Objects
+
+Snakemake wildcards are replaced by the regular expression `.+`. Basically, everything that is matched by `.+` is expanded in the wildcard (see examples below).
 
 * `wildcards`: a Snakemake object that allows to access the wildcard values that are matched in the input and output file patterns of the rule. Example:
 
 ```py
-# given that sample_{whatever_I_write_here_is_fine}.txt matches the values '1' and '2'
+# given that sample_{any_wildcard_name}.txt matches the values '1' and '2'
 rule all:
 	input:
 		"data/output/sample_1.txt",
@@ -214,6 +217,57 @@ rule convert:
 		"data/output/sample_{sample_size}.txt"
 	resources:
 		mem_mb=lambda wildcards: 1024 * int(wildcards.sample_size)
-# then wildcards holds the matched values;
+# then wildcards holds the matched values (`.+`, but in between 'sample_' and '.txt');
 # using wildcards.sample_size extracts from the object the value of the wildcard named {sample_size}
 ```
+
+In case of ambiguity for the wildcard interpretation, the regex used to generate the wildcards can be overridden by constraining it in 3 different ways:
+
+```py
+# 1. constraining the pattern in the wildcard by appending a regex pattern to the wildcard name, after a comma, inside the curly braces.
+rule all:
+	input:
+		"data/input/file_{input_number,\d+}.fasta
+# 2. constraining the pattern in the rule via the `wildcard_constraints` keyword.
+rule all:
+	input:
+		"data/input/file_{input_number}.fasta
+    	wildcard_constraints:
+        	input_number="\d+"
+# 3. constraining the wildcards globally
+wildcard_constraints:
+	input_number="\d+"
+rule A:
+	...
+rule B:
+	...
+```
+
+### More ways to pass inputs
+
+Input files can be Python lists ("Aggregation" of inputs), but Snakemake can also receive inputs using a collection of helper functions that facilitate aggregation. 
+
+```py
+import os, sys
+path = '/input'
+def get_input_files():
+	return = sorted([os.path.join(path, i) for i in os.listdir(path)])
+
+rule:
+	input:
+		get_input_files()
+```
+
+#### `unpack()`
+
+Given a function that generates a dictionary with input names as keys and file names as values, the `unpack()` keyword is used to return named input files from that function.
+
+```py
+def myfunc(wildcards):
+    return {'name_1': '{wildcards.token}.txt'.format(wildcards=wildcards)}
+
+rule:
+	input:
+		unpack(myfunc)
+```
+
