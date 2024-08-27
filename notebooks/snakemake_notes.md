@@ -61,6 +61,8 @@ conda deactivate
 
 ## Writing and Running Snakefile Workflows
 
+<https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html>
+
 Snakemake workflow's instructions are written in a `Snakefile` file. Examples of `Snakefile`:
 
 ```py
@@ -86,8 +88,6 @@ rule my_first_rule:
 ```
 
 ### Rules
-
-<https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html>
 
 The basic building block of a Snakefile is the `rule`. A `rule` block will contain information about the "step" of a workflow or pipeline, which can be composed by many of such steps, connected to one another and able to use as inputs the outputs from other blocks.
 
@@ -243,7 +243,7 @@ rule B:
 	...
 ```
 
-### More ways to pass inputs
+### Helper functions to pass input functions
 
 Input files can be Python lists ("Aggregation" of inputs), but Snakemake can also receive inputs using a collection of helper functions that facilitate aggregation. 
 
@@ -270,4 +270,125 @@ rule:
 	input:
 		unpack(myfunc)
 ```
+
+### Helper functions to pass input and output files
+
+#### `expand()`
+
+The `expand()` function can pass inputs in place of a list comprehension and can also be used to combine different variables. **Note that** in the following cases `{dataset}` and `{ext}` are not wildcards, but placeholders that are expanded to whatever is defined in the additional arguments (`DATASETS` and `FORMATS`, which are previously defined lists).
+
+```py
+rule aggregate:
+    input:
+        expand("{dataset}/a.{ext}", dataset=DATASETS, ext=FORMATS)
+    output:
+        "aggregated.txt"
+    shell:
+        ...
+```
+
+If `FORMATS=["txt", "csv"]` contains a list of desired output formats, `expand()` will automatically combine any dataset with any of these extensions. Furthermore, the first argument can also be a list of strings. In that case, the transformation is applied to all elements of the list:
+
+```py
+expand(["{dataset}/a.{ext}", "{dataset}/b.{ext}"], dataset=DATASETS, ext=FORMATS)
+```
+
+> `expand()` uses Python `itertools`'s function `product` to cretate combinations of values, however that function can be replaced by a different combinatoric function using a second positional argument (*e.g.* `expand(["{dataset}/a.{ext}", "{dataset}/b.{ext}"], zip, dataset=DATASETS, ext=FORMATS)`). 
+
+Argument values passed to `expand()` can also be functions or lists of functions if the return value of `expand()` or `expand()` itself is used within `input` or `params`.
+
+#### `multiext()`
+
+`multiext()` provides a simplified variant of `expand()` that allows to define a set of output or input files that just differ by their extension:
+
+```py
+rule plot:
+    input:
+        ...
+    output:
+        multiext("some/plot", ".pdf", ".svg", ".png")
+    shell:
+        ...
+```
+
+The effect is the same as writing `expand("some/plot{ext}", ext=[".pdf", ".svg", ".png"])`.
+
+### Semantic helper functions
+
+#### `collect()`
+
+The `collect()` function is just an alias for the `expand()` function.
+
+#### `lookup()`
+
+`lookup()` is a function that allows to fetch a value from a python mapping object (*i.e.* a dictionary) or a `pandas`/`numpy` dataframe/series.
+
+```py
+lookup(
+    dpath: Optional[str | Callable] = None,
+    query: Optional[str | Callable] = None,
+    cols: Optional[List[str]] = None,
+    is_nrows: Optional[int], within=None
+)
+```
+
+It's used, for example, to assign fetched values to a variable, used by `expand()`. Its arguments expect parameters to retrieve the necessary information to get the value(s):
+
+* The `within` parameter takes a python mapping object (dictionary), a pandas dataframe, or series;
+* If a dictionary is passed to `within`, `lookup()` expects the `dpath` argument, otherwise it expects the `query` argument. Both `dpath` and `query` can be passed a function;
+
+Example:
+
+```py
+expand("results/{item.sample}.txt", sample=lookup(query="someval > 2", within=samples))
+```
+
+#### `branch()`
+
+The `branch()` function allows to choose different input files based on a conditional statement.
+
+```py
+branch(
+    condition: Union[Callable, bool],
+    then: Optional[Union[str, list[str], Callable]] = None,
+    otherwise: Optional[Union[str, list[str], Callable]] = None,
+    cases: Optional[Mapping] = None
+)
+```
+
+The `condition` arguemnt has to be a function or expression that evaluates to a Boolean value. If it is a function, it needs to take only wildcards as parameters.
+
+The `then` and `otherwise` arguments allow `branch()` to use as input the file(s) specified for `then` if the conditional statement evaluates to `True` and those specified for `otherwise` if it evaluates to `False`.
+
+```py
+def use_sometool(wildcards):
+    # determine whether the tool shall be used based on the wildcard values.
+    ...
+
+rule a:
+    input:
+        branch(
+            use_sometool,
+            then="results/sometool/{dataset}.txt",
+            otherwise="results/someresult/{dataset}.txt"
+        )
+```
+
+#### `evaluate()`
+
+Evaluates a Python expression containing wildcards:
+
+```py
+rule a:
+input:
+    branch(evaluate("{sample} == '100'"), then="a/{sample}.txt", otherwise="b/{sample}.txt"),
+output:
+    "c/{sample}.txt",
+shell:
+    ...
+```
+
+#### `exists()`
+
+The `exists()` function allows to check whether a file exists or not.
 
