@@ -392,3 +392,24 @@ shell:
 
 The `exists()` function allows to check whether a file exists or not.
 
+---
+
+> Most of the times a rule in a workflow needs to get inputs and generate outputs dinamically, starting from files that match wildcards. This is especially true for bioinformatics workflows that work on many files and, on top of that, paired-end reads.
+> In such cases, functions are used to pass inputs to the rule: lambda functions are often proposed as a clean and fast option, but defining one's own functions is better: they are easier to understand and can be defined separately and imported in the `Snakefile` whenever needed, so that if the files and directroy structure grant reproducibility, Snakemake will also grant to avoid redundancy and verboseness.
+
+### Running a `Snakefile`
+
+Running the command `snakemake` will automatically look  in current directory to execute a file named `Snakefile`, using the resource parameters specified in such file. Snakefiles, however, can be named in any way, but that also requires to explicitly pass the name of the file:
+
+```sh
+$ snakemake --snakefile trimming_fastp.smk
+```
+
+Other useful flags for CLI execution:
+
+```sh
+$ snakemake --dryrun	# tests if the workflow is defined properly and estimates the computation time (no execution)
+$ snakemake --cores 1	# overrides default cores usage for the whole workflow
+$ snakemake --resources mem_gb=8	# overrides default memory usage for the whole workflow
+$ snakemake --resources cores=4 mem_gb=8	# overrides multiple default resource parameters for the whole workflow
+```
