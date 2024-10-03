@@ -9,7 +9,7 @@ Go to:
 * [Bash notes 2 (scripting tools - checking conditions, control statements)](notebooks/bash_scripting.md)
 * [Perl notes](notebooks/PERL_notes.md)
 * [R notes](notebooks/R_notes.md)
-<!--* [Python notes](notebooks/.md) -->
+* [Python notes](notebooks/Python_notes.md)
 * [Snakemake notes](notebooks/snakemake_notes.md)
 * [Extended Regular Expressions](notebooks/Regular_expressions.md)
 * [Useful Bash one-liners](notebooks/useful_commands.md)
