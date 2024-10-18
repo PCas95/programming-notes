@@ -17,7 +17,9 @@ To make the script executable by simply typing its name from anywhere, 3 conditi
 3) the path to the script has to be included in the `$PATH`.
 To add a path in the `$PATH` system variable:
 
-            export PATH=$PATH:path-to-directory
+```sh
+export PATH=$PATH:path-to-directory
+```
 
 *NOTE: It may be a good idea to create an already executable template "PERL_script_file", containing just the interpreter directive. This file would be copied every time a new script is written: since copying a file also copies file permissions, doing this would save the time used to write the interpreter directive and to make it executable.*
 
@@ -234,37 +236,61 @@ Example:
 
 In the example above we used parentheses to remind that to extract the match of a regex we use the special variables `$1`, `$2`, `$3` etc, so parentheses are needed to create one ore more groups in the RE, so that the matches are actually retrievable.
 
-## Functions
+## Common Functions
 
-`print()`: the print function works largely the same way as Python's. Strings are written between quotes while numbers are not, and it supports printing a list of items (separated by commas, in Perl's case). Bear in mind that *variable interpolation* only takes place if double quotes are used. In Perl, since not all formatting is mandatory, parentheses can be omitted and the string to print may just be separated from the `print` function by a space.
+### `print()`
 
-`exit()`: it stops the program. It works just like Python's `exit()`, so it doesn't print anything (if I want to leave a message, I'll have to call `print()` before the `exit()` call).
+The print function works largely the same way as Python's. Strings are written between quotes while numbers are not, and it supports printing a list of items (separated by commas, in Perl's case). Bear in mind that *variable interpolation* only takes place if double quotes are used. In Perl, since not all formatting is mandatory, parentheses can be omitted and the string to print may just be separated from the `print` function by a space.
 
-`die()`: stops the program and leaves a message (same syntax of the `print()` function). Should be used when the script has to be stopped because of a problem.
+### `exit()`
 
-`reverse()`: reverses the order of elements in an array or reverses a string.
+It stops the program. It works just like Python's `exit()`, so it doesn't print anything (if I want to leave a message, I'll have to call `print()` before the `exit()` call).
 
-`system()`: launches the command used as argument in the UNIX shell. Requires either quote delimiters or the command's argument, options and flags to be listed separately, as a list separated by commas.
-Examples:
+### `die()`
 
-    system(command, argument_1, argument_2);
-    system("command argument_1 argument_2");
+Stops the program and leaves a message (same syntax as the `print()` function). Should be used when the script has to be stopped because of a problem/error.
+
+### `reverse()`
+
+Reverses the order of elements in an array or reverses a string.
+
+#### `system()`
+
+Runs the command used as argument in the UNIX shell. Requires either quote delimiters or the command's argument, options and flags to be listed separately, as a list separated by commas. Alternatively, a system command can be directly executed just by enclosing it between backticks.
+
+```pl
+system(command, argument_1, argument_2);
+system("command argument_1 argument_2");
+`grep -E '^regex_here' my_file.txt`
+```
 
 More in [the `system()` function section](#the-system-function).
 
 ### Numeric functions
 
-`abs()`: identical to Python's function of the same name, it returns the absolute (non-negative) value of a number.
+#### `abs()`
 
-`int()`: similarly to Python's function of the same name, it returns the integer value of the argument. Just like Python's `int()` function, it also converts strings to number values and it will always round down.
+It returns the absolute (non-negative) value of a number.
 
-`log()`: natural log of the argument.
+#### `int()`
 
-`rand()`: generates a random number in the range from 0 to the argument.
+It returns the integer value of the argument. It also converts strings to number values (if possible) and it will always round down.
 
-`sin()`: sin of argument.
+#### `log()`
 
-`sqrt()`: square root of argument.
+Natural log of the argument.
+
+#### `rand()`
+
+Generates a random number in the range from 0 to the argument.
+
+#### `sin()`
+
+Sin of argument.
+
+#### `sqrt()`
+
+Square root of argument.
 
 > *NOTE: regarding numeric precision, Perl goes through the same overflow and underflow errors as a calculator, thus it's not wise to compare if 2 floating point values are equal. To avoid problems is always best to use the* `abs()` *function to compare absolute values or to get the absolute value of the result of calculations on floats.*
 
@@ -306,13 +332,13 @@ In the example above, `qx` encloses the command stored in the `$cmd` variable in
 
 #### Case-conversion functions
 
-`uc()`: converts an entire string to upper-case characters.
+**`uc()`:** converts an entire string to upper-case characters.
 
-`lc()`: converts an entire string to lower-case characters.
+**`lc()`:** converts an entire string to lower-case characters.
 
-`ucfirst()`: converts the first character of a string to upper-case.
+**`ucfirst()`:** converts the first character of a string to upper-case.
 
-`lcfirst()`: converts the first character of a string to lower-case.
+**`lcfirst()`:** converts the first character of a string to lower-case.
 
 ### Scalar variable functions
 
@@ -341,10 +367,11 @@ Examples:
 `pop()`: it's the reverse function of push: it removes the last element (on the right side) from the argument array (`pop(@starters)`).
 
 `shift()`: it removes a value from the front (left side) of the list. Can be used together with an assignment operator to assign the shifted value to a scalar variable, rather than simply discard the item.
-Examples:
 
-    shift(@starters);
-    $shifted_Bulba = shift(@starters);
+```pl
+shift(@starters);
+$shifted_Bulba = shift(@starters);
+```
 
 `unshift()`: as the reverse function of `shift()`, it adds a value to the front (left side) of an array. Like `push()`, it also requires two arguments (first the value to add and then the argument array).
 
@@ -1061,5 +1088,132 @@ If a command is launched in the shell with `system()`, the logical operator `or`
 ### Executing commands with the `open()` function
 
 Perl's `open()` function can also be used to send or receive output from a program in addition to reading or writing to a file.
+
+## Subroutines
+
+## The Arrow Operator `->`
+
+In Perl, the `->` operator is used in 3 main circumstances: **[dereferencing](#dereferencing)**, **[accessing complex data structures](#accessing-complex-data-structures)** and **[method calls](#method-calls)**.
+
+### Referencing and Dereferencing
+
+In Perl, a reference is a scalar variable that holds the memory address of another value (such as an array, hash, or subroutine). Instead of working directly with large or complex data structures, using references simplifies operations, saves memory and supports passing such data to functions.
+
+#### Referencing
+
+"Referencing" is the process of creating a scalar variable that points to another data structure. The pointer, or reference, will not copy the original variable's contents: it will hold the memory address of such data. References can point to scalars, arrays, hashes, subroutines, and even filehandles.
+
+To create a reference, the backslash operator (`\`) is used:
+
+```pl
+# scalar reference
+## create a scalar variable
+my $scalar = 10;
+## create a reference to the scalar
+my $scalar_ref = \$scalar;
+# the output of print on a reference is a memory address (e.g., SCALAR(0x563d240))
+print $scalar_ref;
+
+# array reference
+## create an array
+my @array = (1, 2, 3);
+# create a reference to the array
+my $array_ref = \@array;
+# output: ARRAY(0x563d2b0)
+print $array_ref;
+
+# hash reference
+my %hash = (key1 => 'value1', key2 => 'value2');
+my $hash_ref = \%hash;
+## output: HASH(0x563d2e0)
+print $hash_ref;
+
+# subroutine reference
+## create a subroutine
+sub greet { return "Hello!" }
+## create a reference to the subroutine
+my $sub_ref = \&greet;
+## output: CODE(0x563d300)
+print $sub_ref;
+```
+
+#### Dereferencing
+
+Dereferencing is the process of accessing the actual data that the reference points to. To do that in Perl, the scalar pointer is preceded by the appropriate symbol (`$`, `@`, `%` or `&`), or you can use the arrow operator (`->`), which simplifies access to more complex structures.
+
+```pl
+# scalar reference
+my $scalar = 10;
+my $scalar_ref = \$scalar;
+# dereferencing a scalar reference
+print $$scalar_ref;
+
+# array reference
+my @array = (1, 2, 3);
+my $array_ref = \@array;
+# dereferencing an array reference
+## dereferencing the whole array with @ (output: 1 2 3)
+print "@$array_ref";
+## dereferencing a specific element with -> (output: 1)
+print $array_ref->[0];
+
+# hash reference
+my %hash = (key1 => 'value1', key2 => 'value2');
+my $hash_ref = \%hash;
+# dereferencing a hash reference
+## dereferencing the whole hash with % (output: key1value1key2value2)
+print %$hash_ref;
+## dereferencing specific keys with -> (output: value1)
+print $hash_ref->{key1};
+
+# subroutine reference
+sub greet { return "Hello!" }
+my $sub_ref = \&greet;
+# dereferencing a subroutine reference
+print &$sub_ref();
+## preferred style (->())
+print $sub_ref->();
+```
+
+### Accessing Complex Data Structures
+
+In Perl, complex data structures like arrays of arrays, arrays of hashes, etc. are more easily managed using references and the arrow operator the extract specific values.
+
+```pl
+# references of complex data structures
+## build a complex data structure (array of hashes)
+my @array_of_hashes = (
+    { name => 'Dark Magician', atk => 2500 },
+    { name => 'B.-E. White Dragon', atk => 3000 }
+);
+## dereference whole data structure
+my $array_ref = \@array_of_hashes;
+## dereference a single value (output: B.-E. White Dragon)
+print $array_ref->[1]->{name};
+```
+
+### Method Calls
+
+In object-oriented Perl, the arrow operator is used to call methods on objects or classes. It has the same role of the dot `.` in Python, when calling methods on objects and classes or a function from a specific library.
+
+#### Calling a Method on an Object
+
+When working with objects, `->` is used to invoke methods:
+
+```pl
+# -> calls the new() method to create a new object
+my $object = MyClass->new(); 
+# -> calls the do_something() method on the object
+$object->do_something();
+```
+
+#### Calling a Method on a Class
+
+When working with classes, `->` calls class methods (methods that don't need an instance):
+
+```pl
+# -> calls a class method directly on MyClass
+MyClass->class_method();
+```
 
 
