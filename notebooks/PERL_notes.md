@@ -270,13 +270,39 @@ More in [the `system()` function section](#the-system-function).
 
 ### String functions
 
-`length()`: returns the length of the argument string (it counts all characters, even those that are not printed).
+#### `length()`
 
-`substr()`: the *substring* function extracts text from a string. It accepts up to 3 arguments, separated by a comma and a space: the first one is the string argument (mandatory), the second is the offset or starting position (mandatory) and the third is the length (optional). So `substr()` extracts text from the first argument, starting at the position provided by the second argument, of the length of characters provided by the third argument or to the end of the string argument (if no length argument was provided). Just like in Python's lists, positions are counted starting from 0, not 1, and negative numbers can be used as second argument to access the string characters from the right (the end); so -1 would be the last character of the string and -2 the second to last. `substr()` does not change the original string, but it can be used to do so by combining it with an assignment operator:
+Returns the length of the argument string (it counts all characters, even those that are not printed).
 
-    substr($some_string, 19, 7) = "something else";
+#### `substr()`
+
+The *substring* function extracts text from a string. It accepts up to 3 arguments, separated by a comma and a space: the first one is the string argument (mandatory), the second is the offset or starting position (mandatory) and the third is the length (optional). So `substr()` extracts text from the first argument, starting at the position provided by the second argument, of the length of characters provided by the third argument or to the end of the string argument (if no length argument was provided). Just like in Python's lists, positions are counted starting from 0, not 1, and negative numbers can be used as second argument to access the string characters from the right (the end); so -1 would be the last character of the string and -2 the second to last. `substr()` does not change the original string, but it can be used to do so by combining it with an assignment operator:
+
+```pl
+substr($some_string, 19, 7) = "something else";
+```
 
 In the example above, the text starting at position 19 and ending at position 26 (length 7) is substituted with the string at the right of the assignment operator. The same syntax can be used to delete parts of a string (using an empty string value) or to insert a string at a certain position.
+
+#### `qq{}`
+
+Encloses the argument string in double quotes, allowing interpolation of variables. The functions [`qw`](#), `qq` and [`qx`](#qx) normally use curly braces as delimiters for their arguments, but they can use any delimiter (`()`, `//`...).
+
+```pl
+my $cmd = qq{grep -i '$regExpr' $f};
+```
+
+The example above also shows that `qq` allows interpolation of `$regExpr` even if that variable is also between single quotes. 
+
+#### `qx{}`
+
+Encloses the argument string in backticks, used to directly run a system command.
+
+```py
+my $ris = qx{$cmd};
+```
+
+In the example above, `qx` encloses the command stored in the `$cmd` variable in backticks: the system command is executed and its results captured in the `$ris` variable.
 
 #### Case-conversion functions
 
