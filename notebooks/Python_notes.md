@@ -1,6 +1,6 @@
 # Python notes
 
-## Main facts
+## Getting started
 
 ### Taking input
 
@@ -81,6 +81,12 @@ An input can also be a variable: `std_in = input()`
 >- it can't start with a number;
 >- can't be more than one word (no blank spaces allowed);
 >- can only contain letters, numbers and underscore (`_`).
+
+## Keywords or reserved words
+
+Some words in Python cannot be used to define functions, variables or other features of the programming language. This happens because such words are **reserved** for Python, which uses them for key actions. Examples of this behaviour are words used for [statements](#statements), as [operators](#operators) or as [functions](#functions), like `for`, `def`, `in`, `not`, `class`, or `import`.
+
+These words are commonly known as **Keywords**. True keywords **cannot be used** and will cause the script to throw an error if improperly used in a script. Other words used in Python, like those of many functions, will not cause the script to crash if used for other purposes, but they **should not be used**: it's not good practice and it causes confusion in the script, which becomes less readable. As such, the misuse of such words is discouraged. 
 
 ## Values
 
@@ -172,7 +178,7 @@ Example:
     [2, 3]
 ```
 
-The commute operator can be used to change the value of an item in a list:
+The commute  can be used to change the value of an item in a list:
 
 ```py
     >>> starters = ['bulbasaur', 'charmander', 'squirtle']
@@ -298,7 +304,7 @@ Or based on values instead of keys:
 
 #### Tuple unpacking
 
-Tuples also allow to use the [commute operator](#variables) in a multiple assignment statement, also called **tuple unpacking**: a shortcut to assign multiple items, or the values in a tuple or list, to multiple variables with just one line of code. The items will be assigned to the variables in the order in which both are listed. The variable names will have to be separated by a comma and a space and will have to be the exact same number of the items on the right side of the statement:
+Tuples also allow to use the [commute ](#variables) in a multiple assignment statement, also called **tuple unpacking**: a shortcut to assign multiple items, or the values in a tuple or list, to multiple variables with just one line of code. The items will be assigned to the variables in the order in which both are listed. The variable names will have to be separated by a comma and a space and will have to be the exact same number of the items on the right side of the statement:
 
 ```py
 # using parentheses (base tuples syntax)
@@ -435,7 +441,7 @@ These functions are used to transform the arguments into their corresponding int
 
 ### `type()`
 
-Returns information about the type of the variable used as argument. Can be used in [`if` statements](#if-statement) to check for data type, together with the `is` and `is not` operators.
+Returns information about the type of the variable used as argument. Can be used in [`if` ](#if-statement) to check for data type, together with the `is` and `is not` operators.
 
 ### `list()` and `tuple()`
 
@@ -779,6 +785,68 @@ import sys, re
 ```
 
 The [`dir()`](#dir) function can list all functions and methods from the argument module (as long as teh module has been imported).
+
+## Built-in variables
+
+When a Python script is created, it will have a number of built-in variables, *i.e.* variables that are pre-set and are **reserved** for Python. Built-in variables are predefined identifiers provided by Python that have specific meanings and behaviors. Here is a list of important built-in variables, their usage and use cases:
+
+### `__name__`
+
+The `__name__` variable indicates the name of the [module](#modules) or script. When a module is run directly, Python sets `__name__` to the string `'__main__'`. When the module is imported into another module, `__name__` is set to the module's name.
+
+The main use of `__name__` and the special string `'__main__'` lies in the `if __name__ == '__main__'` construct.
+
+This construct allows to write code that can behave differently depending on whether it is being executed as the main program or as part of another module. This is possible thanks to the fact that a Python script can import as modules other scripts or functions defined in other scripts.
+
+The construct is often used to include all code that should be run if the script is run as the main script, like function calls, while blocks outside the `if` condition of the construct will usually contain `def` blocks of code. It is also used to include test code or script-specific functionalities that should not be run when the module is imported elsewhere.
+
+Example:
+
+```py
+# win_duel.py
+
+def obliterate():
+    print("Exodia, obliterate!!")
+
+if __name__ == '__main__':
+    obliterate()
+```
+
+In the example above, the `obliterate()` function will only be run if the script is executed directly. If the script is imported as a module from another program, teh second script will have the `obliterate()` function available, but it won't run it. To use the function, it will need to be called in the second script.
+
+### `__file__`
+
+The `__file__` variable contains the path to the current main script's file, if the Python script was run directly, or the path to a module, if used in an imported module. The value of `__file__` can be a relative or absolute path, depending on how the script was executed. Below 2 examples:
+
+```py
+print(__file__) # prints the path to the module/script
+print(os.path.dirname(__file__)) # prints the directory of the module/script
+print(os.path.basename(__file__)) # prints the base name of the module/script
+```
+
+### `__doc__`
+
+The `__doc__` variable holds the docstring of a module, class, method, or function. It is an attribute that provides documentation for the code, typically appearing as a string at the beginning of the definition.
+
+Example:
+
+```py
+def obliterate():
+    """Returns a silly string. (And wins you the game!)."""
+    print("Exodia, obliterate!!")
+
+print(obliterate.__doc__) # prints 'Returns a silly string. (And wins you the game!).'
+```
+
+`__doc__` is meant to document the purpose, usage, or details about the code. It helps users understand what a module, class, or function does. The `__doc__` attribute can be accessed directly for documentation, and tools like `help()` or `pydoc` use it.
+
+### `__version__`
+
+The `__version__` variable is not a standard built-in, but it's common practice to use it to denote the version of a module. Typically, it's represented as a string in the format "major.minor.patch" (*e.g.*, `'1.0.0'`), though any string format can be used.
+
+```py
+__version__ = '1.0.0'
+```
 
 ## Modules
 
