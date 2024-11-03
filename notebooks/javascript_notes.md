@@ -28,7 +28,7 @@ There are 8 different **data types** in JavaScript:
 - `string`
 - `symbol`
 - `bigint`
-- `number`
+- [`number`](#number-data-type)
 - `object`
 
 Like in other programming languages, **variables** are used to point to the data, in order to store and manipulate it in a dynamic fashion. They can store different values at different times.
@@ -37,7 +37,7 @@ Like in other programming languages, **variables** are used to point to the data
 
 To declare (initialise) a variable in JavaScript we use the `var` keyword.
 
-To assign a variable the *assignment operator* `=` is used
+To assign a variable, the *assignment operator* `=` is used:
 
 ```js
 var myVariable;
@@ -51,10 +51,10 @@ It is common to initialize a variable to an initial value in the same line as it
 var myVar = 0;
 ```
 
-In the major JavaScript update ES6, another keyword to declare veriable was added: `let`. Its usage is the same as `var`, with one major difference in behaviour:
+In the major JavaScript update ES6, another keyword to declare veriables was added: `let`. Its usage is the same as `var`, with one major difference in behaviour:
 
 - with `var` we can declare the same variable twice, overriding the contents of the old variable with the same name. This will not throw an error.
-- with `let` we cannot declare teh same variable twice, because this would throw an error. A variable can only be declared once.
+- with `let` we cannot declare the same variable twice, because this would throw an error. A variable can only be declared once.
 
 ```js
 let newVar;
@@ -82,4 +82,58 @@ var differentNameForVar;
 ```
 
 - Use `let` instead of `var` if the codebase is large or to avoid debug issues.
+
+> As a general rule of thumb, it is best to use `let` unless `var` is strictly necessary.
+
+#### Constant Values
+
+A third keyword to declare variables in JavaScript is `const`, which has the same features as `let`, but creates a **constant value**, *i.e.* a **read-only** variable. Read-only variables cannot be reassigned (updated or otherwise changed with the assignment operator).
+
+**Best Practices:**
+
+- Read-only (immutable) variables are written in uppercase;
+- Mutable values are written in lowercase or camelCase.
+
+### `number` Data Types
+
+Numbers have `number` data type and can be classified into different types:
+
+- Integers or whole numbers;
+- Decimals or Floating Point Numbers or Floats;
+- 
+
+> Floating Point Numbers use the dot (`.`) as decimal separator.
+
+#### Operators
+
+| Operator | Meaning |
+| --- | --- |
+| `+` | Addition |
+| `-` | Subtraction |
+| `*` | Multiplication |
+| `/` | Division (quotient) |
+
+#### Shorthands
+
+| Operator | Meaning |
+| --- | --- |
+| `++` | Increment by 1 |
+| `--` | Decrease by 1 |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
