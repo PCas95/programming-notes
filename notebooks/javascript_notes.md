@@ -94,6 +94,16 @@ A third keyword to declare variables in JavaScript is `const`, which has the sam
 - Read-only (immutable) variables are written in uppercase;
 - Mutable values are written in lowercase or camelCase.
 
+#### Properties
+
+Characteristics of values can be consulted by using that value's **properties**, which are not too dissimilar in concept from Python's methods for classes. Properties are consulted by appending a period `.` and the name of the property to a value.
+
+See properties for each data type at the appropriate section:
+
+- [String properties](#string-properties)
+- [String properties](#string-properties)
+- [String properties](#string-properties)
+
 ### `number` Data Type
 
 Numbers have the `number` data type and can be classified into:
@@ -103,7 +113,7 @@ Numbers have the `number` data type and can be classified into:
 
 > Floating Point Numbers use the dot (`.`) as decimal separator.
 
-#### Operators
+#### Numeric Operators
 
 | Operator | Meaning |
 | --- | --- |
@@ -153,17 +163,54 @@ console.log(myVar);
 
 ### `string` Data Type
 
+Strings are written between single (`''`) or double (`""`) quotes. Quotes inside the string itself can be added as simple characters by escaping them with backslash (`/`).
 
+> **NOTE:** Unlike other programming languages, single and double quotes work the same in JavaScript.
+>
+> We are allowed to use any quote because in some cases it may be needed to use both in a string, for example when saving an `<a>` tag with various attributes in quotes, all within a string.
 
+Another way to circumvent the "quotes within quotes issue" is to use different kind of quotes for inside and outside the string.
 
+Examples:
 
+```js
+const stringOne = '<a href="http://www.example.com" target="_blank">Link</a>';
+let stringTwo = "Mikey said: \"Kawabunga!!!\"";
+```
 
+Characters that need to be escaped inside strings:
 
+| Code | Output |
+| --- | --- |
+| \\' | single quote |
+| \\" | double quote |
+| \\\ | backslash |
+| \n | newline |
+| \t | tab |
+| \r | carriage return |
+| \b | backspace |
+| \f | form feed |
 
+#### String Operators
 
+| Operator/Augmented Operator | Meaning |
+| --- | --- |
+| `+` | Concatenation |
+| `+=` | Concatenation to string variable |
+| `*` | Multiplication |
+| `/` | Division (quotient) |
+| `%` | Division (remainder) |
 
+> String variables are added to a string in the same way as Python: by concatenating the string variable outside the quotes, to allow **variable interpolation**.
 
+### String Properties
 
+#### `.length`
 
+Returns the string's number of characters.
 
-
+```js
+let myVal = "somestringverylongandwithoutspaces!!";
+console.log(myVal.length);
+36
+```
