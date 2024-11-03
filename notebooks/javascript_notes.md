@@ -25,7 +25,7 @@ There are 8 different **data types** in JavaScript:
 - `undefined`
 - `null`
 - `boolean`
-- `string`
+- [`string`](#string-data-type)
 - `symbol`
 - `bigint`
 - [`number`](#number-data-type)
@@ -94,13 +94,12 @@ A third keyword to declare variables in JavaScript is `const`, which has the sam
 - Read-only (immutable) variables are written in uppercase;
 - Mutable values are written in lowercase or camelCase.
 
-### `number` Data Types
+### `number` Data Type
 
-Numbers have `number` data type and can be classified into different types:
+Numbers have the `number` data type and can be classified into:
 
 - Integers or whole numbers;
 - Decimals or Floating Point Numbers or Floats;
-- 
 
 > Floating Point Numbers use the dot (`.`) as decimal separator.
 
@@ -112,6 +111,7 @@ Numbers have `number` data type and can be classified into different types:
 | `-` | Subtraction |
 | `*` | Multiplication |
 | `/` | Division (quotient) |
+| `%` | Division (remainder) |
 
 #### Shorthands
 
@@ -120,8 +120,38 @@ Numbers have `number` data type and can be classified into different types:
 | `++` | Increment by 1 |
 | `--` | Decrease by 1 |
 
+Example:
 
+```js
+let myVar = 4;
+console.log(myVar);
+4
+myVar++;
+console.log(myVar);
+5
+```
 
+#### Augmented Operators
+
+JavaScript uses **augmented operators** as shortcuts cor **compound assignments**, allowing to modify a numeric value stored in a variable, without the need to write the full line (*e.g.* `myVar = myVar + 40`).
+
+| Augmented Operator | Meaning |
+| --- | --- |
+| `+=` | Add value to variable |
+| `-=` | Subtract value from variable |
+| `*=` | Multiply variable by value |
+| `/=` | Divide variable by value |
+
+Example:
+
+```js
+let myVar = 4;
+myVar += 38;
+console.log(myVar);
+42
+```
+
+### `string` Data Type
 
 
 
