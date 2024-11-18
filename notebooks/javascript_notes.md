@@ -96,13 +96,33 @@ A third keyword to declare variables in JavaScript is `const`, which has the sam
 
 #### Properties
 
-Characteristics of values can be consulted by using that value's **properties**, which are not too dissimilar in concept from Python's methods for classes. Properties are consulted by appending a period `.` and the name of the property to a value.
+Characteristics of values can be consulted by using that value's **properties**, which are not dissimilar in concept from Python's object attributes. Properties are consulted by appending a period `.` and the name of the property to a value.
 
 See properties for each data type at the appropriate section:
 
 - [String properties](#string-properties)
 - [String properties](#string-properties)
 - [String properties](#string-properties)
+
+#### Mutable VS Immutable
+
+Values can be **mutable** (*i.e.* can be modified once created), or **immutable** (*i.e.* they cannot be altered once created).
+
+The proper way to "modify" an immutable value is to assign to a new variable the results of that value's processing. For example, creating a new string from an original one.
+
+These are the characteristics of values, regarding mutability:
+
+| Value | Mutable/Immutable |
+| --- | --- |
+| strings | immutable |
+
+Note that immutability of a value means that that value **cannot be changed in place**, but it doesn't mean that one cannot reassign a new value to the variable:
+
+```js
+let myString = "Bunny";
+myString[0] = "H";  // not allowed, will throw an error
+myString = "Hunny";  // allowed, does not try to modify string
+```
 
 ### `number` Data Type
 
@@ -143,7 +163,7 @@ console.log(myVar);
 
 #### Augmented Operators
 
-JavaScript uses **augmented operators** as shortcuts cor **compound assignments**, allowing to modify a numeric value stored in a variable, without the need to write the full line (*e.g.* `myVar = myVar + 40`).
+JavaScript uses **augmented operators** as shortcuts for **compound assignments**, allowing to modify a numeric value stored in a variable, without the need to write the full line (*e.g.* `myVar = myVar + 40`).
 
 | Augmented Operator | Meaning |
 | --- | --- |
@@ -163,9 +183,9 @@ console.log(myVar);
 
 ### `string` Data Type
 
-Strings are written between single (`''`) or double (`""`) quotes. Quotes inside the string itself can be added as simple characters by escaping them with backslash (`/`).
+Strings are written between single (`''`) or double (`""`) quotes. Quotes inside the string itself can be added as simple characters by escaping them with backslash (`\`).
 
-> **NOTE:** Unlike other programming languages, single and double quotes work the same in JavaScript.
+> **NOTE:** Unlike other programming languages, single and double quotes work the same way in JavaScript.
 >
 > We are allowed to use any quote because in some cases it may be needed to use both in a string, for example when saving an `<a>` tag with various attributes in quotes, all within a string.
 
@@ -198,10 +218,33 @@ Characters that need to be escaped inside strings:
 | `+` | Concatenation |
 | `+=` | Concatenation to string variable |
 | `*` | Multiplication |
-| `/` | Division (quotient) |
-| `%` | Division (remainder) |
 
 > String variables are added to a string in the same way as Python: by concatenating the string variable outside the quotes, to allow **variable interpolation**.
+
+#### Bracket notation 
+
+A string can be seen as list of characters. As such, any character in the string can be returned using bracket notation with the appropriate index (starting from 0):
+
+```js
+const name = "Leonardo";
+let letter = name[0];
+console.log(letter);
+L
+```
+
+To get the last letter of a string, we can subtract 1 from the string's length:
+
+```js
+var tName = "Michelangelo";
+let letter = name[name.length - 1];
+console.log(letter);
+o
+
+var tName = "Raffaello";
+let letter = name[name.length - 3];
+console.log(letter);
+l
+```
 
 ### String Properties
 
@@ -214,3 +257,19 @@ let myVal = "somestringverylongandwithoutspaces!!";
 console.log(myVal.length);
 36
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
