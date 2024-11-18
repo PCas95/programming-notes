@@ -101,8 +101,6 @@ Characteristics of values can be consulted by using that value's **properties**,
 See properties for each data type at the appropriate section:
 
 - [String properties](#string-properties)
-- [String properties](#string-properties)
-- [String properties](#string-properties)
 
 #### Mutable VS Immutable
 
@@ -115,6 +113,7 @@ These are the characteristics of values, regarding mutability:
 | Value | Mutable/Immutable |
 | --- | --- |
 | strings | immutable |
+| array entries | mutable |
 
 Note that immutability of a value means that that value **cannot be changed in place**, but it doesn't mean that one cannot reassign a new value to the variable:
 
@@ -123,6 +122,8 @@ let myString = "Bunny";
 myString[0] = "H";  // not allowed, will throw an error
 myString = "Hunny";  // allowed, does not try to modify string
 ```
+
+Entries of an array are mutable, and can be changed even if the array was originally declared with [`const`](#constant-values).
 
 ### `number` Data Type
 
@@ -221,7 +222,19 @@ Characters that need to be escaped inside strings:
 
 > String variables are added to a string in the same way as Python: by concatenating the string variable outside the quotes, to allow **variable interpolation**.
 
-#### Bracket notation 
+#### String Properties
+
+##### `.length`
+
+Returns the string's number of characters.
+
+```js
+let myVal = "somestringverylongandwithoutspaces!!";
+console.log(myVal.length);
+36
+```
+
+### Bracket notation 
 
 A string can be seen as list of characters. As such, any character in the string can be returned using bracket notation with the appropriate index (starting from 0):
 
@@ -246,30 +259,86 @@ console.log(letter);
 l
 ```
 
-### String Properties
+The bracket notation is also used to access entries of an array, which is in fact a list of elements (see [`array` variables](#array-variables).
 
-#### `.length`
+### `array` Variables
 
-Returns the string's number of characters.
+JavaScript arrays are variables able to store lists of elements, called *entries*. Just like arrays in Perl and lists in Python, their notation require to enclose entries between square brackets `[]`, separated by commas.
+
+Arrays can store values of different types simultaneously, even other arrays (**nested arrays** or **multi-dimensional arrays**). Entries are accessed through indexing, starting from 0. Entries of *multi-dimensional arrays* are accessed with *multi-indexing*.
 
 ```js
-let myVal = "somestringverylongandwithoutspaces!!";
-console.log(myVal.length);
-36
+var myArray = ["Bulbasaur", "Charmander", "Squirtle"];
+var pokeDex = [["Bulbasaur", 1], ["Charmander", 4], ["Squirtle", 7]];
+
+console.log(myArray[2]);
+Squirtle
+
+console.log(pokeDex[0][1]);
+1
 ```
 
+#### Array Methods
 
+##### `.push()`
 
+The  `.push()` method allows to add to the end (right side), or append to the array, the argument values. It returns the new length of the array.
 
+```js
+pokeDex.push(["Caterpie", 10]);
+```
 
+##### `.pop()`
 
+The `.pop()` method is used to remove the value at the end (right side) of an array. When using `.pop()`, not only it removes the last element of the array, it also retuns it, so it can be used to assign that element to a new variable.
 
+```js
+let myFirstBug = pokeDex.pop();
+```
 
+##### `.shift()`
 
+The `.shift()` method removes the first element of an array and works in the same way as `.pop()`.
 
+##### `.unshift()`
 
+The `.unshift()` method adds an element at the beginning (left side) of an array. It works just like `.push()`.
 
+## Functions
 
+Functions are reusable parts of code: they can be defined and later called or *invoked*. The syntax to define a function is halfway between Python's functions and Perl's subroutines, and requires the **`function`** keyword:
+
+```js
+function myFunction() {
+  console.log(pokeDex);
+}
+
+myFunction();
+```
+
+Each time the function is called, it will execute the code between curly braces.
+
+Additional arguments can be passed to a function by using *parameters*, placeholders for values that are used as input for a function. A function can be defined along with one or more parameters (separated by comma if more than one). 
+
+```js
+function myFunction(arr, ix) {
+  console.log(arr[ix]);
+}
+
+myFunction(pokeDex, 1);
+```
+
+### The `return` Statement
+
+The `return` statement is used to send a value back out of a function:
+
+```js
+function myFunction(arr, ix) {
+  return arr[ix];
+}
+
+let myOutcome = myFunction(pokeDex, 1);
+```
 
 
 
