@@ -335,6 +335,12 @@ my_list = [dc[i] for i in dc.keys()]
 
 List comprehension is less easy to understand at first glance, but offers the advantages of being more succint and of avoiding to create extra variables (like in the standard `for` block of code).
 
+### bytes
+
+Any weird encoding of characters can be treated as bytes, or a 'byte array': since Python2 used ASCII internally, characters like asian ideograms where not considered a string data type but, more generically, bytes. Python3's main update was the introduction of Unicode as the set of characters used internally, so now special characters (from non-latin alphabets) are also strings.
+
+Bytes data type is important for data transfer in and out of Python or the local environment: data sent to a web server (like a request) must be encoded (using the `.encode()` method) to UTF-8 (no arguments required for `.encode()`, since UTF-8 is default) and data coming from the Internet must be decoded (`.decode()` method).
+
 ## Operators
 
 | Operators | numeric values | strings | lists | Augmented Assignment Operators | Equivalent assignment statement |
@@ -848,23 +854,165 @@ The `__version__` variable is not a standard built-in, but it's common practice 
 __version__ = '1.0.0'
 ```
 
-## Modules
+## Modules or Libraries
 
-*Below is a list of selected modules with short reminders of important functions from them.*
+Like other programming languages, like Perl and R, Python can be extended by importing libraries: packages containing more functions, or introducing new objects with related features and methods. Modules are imported in a Python script using an `import` statement.
+
+Some bigger modules may be subdivided into subsets. Subsets can be imported separately to avoid import of the full library, if its other functionalities are not needed. This can be done with 2 different syntaxes: using the full name of the module and its submodule joined on a dot `.`; using the `from` keyword along with the `import` keyword.
+
+```py
+# import a (full) module
+import matplotlib
+
+# import a subset of a module (functions are accessed as matplotlib.pyplot.functionName())
+import matplotlib.pyplot
+
+# import subset with `from` keyword (functions are accessed as pyplot.functionName())
+from matplotlib import pyplot
+```
+
+When importing a library, it can be "aliased", *i.e.* an **alias** can be created for it, so that the module can be called upon using its alias in place of the full name, in the rest of the script. 
+
+This is especially useful with libraries with long names, or when there is the need to call functions from a library subset. Module aliasing is done using the `as` keyword, similarly to aliasing filehandles with `with open()`.
+
+Examples:
+
+```py
+import pandas as pd
+import matplotlib
+import matplotlib.pyplot as plt
+
+... # object creation (omissis)
+plt.savefig('dataset_barplot.png')  # equivalent to matplotlib.pylot.savefig()
+```
+
+> It is not necessary to call the full library before a subset, if functions from its other subets are not needed. If they are needed though, it still is convenient (and good practice) to create an alias for functions with a long name we know we'll be using, as for `matplotlib.pylot` subset, which contains the `matplotlib.pylot.savefig()` function.
+
+*Below is a list of selected modules with short reminders of important available functions.*
+
+### `sys`
+
+The `sys` module includes functions to interact with the system and processes. Important tools include:
+
+- **`sys.exit()`** - terminates Python script managing all process interactions: raises a `SystemExit` exception, signaling an intention to exit the interpreter. It's the preferred way to exit the script: `exit()` should be used only for the interactive terminal, while making the script just end would effectively exit the program, but is considered not clean. `sys.exit()` can also accept an integer as optional argument, giving the exit status (default: `0`).
+- **`sys.argv`** - an array-like object which stores command line arguments for the Python script. It's the simplest way to get command line arguments. `argv[0]` is the script name 
+
+### `os`
+
+The `os` module contains tools that allow to use operating system dependent functionalities, like exploring the filesystem or calling system commands.
+
+- **`os.system()`** - allows to execute system commands. If the called command generates any output, it will be sent to the `stdout` stream, while the returned value will be the exit status code of the command. See also [`subprocess.call()`](#subprocesscall).
+
+```py
+>>> import os
+>>> cmd = 'date'
+>>> returned_value = os.system(cmd)
+Sat 20 May 12:34:29 CEST 2023
+>>> print(returned_value)
+0
+```
+
+- **os.getgid()** - returns the real group id of the current process.
+
+- **os.getenv()** - returns the value of the environment variable.
+
+- **`os.listdir()`** - returns a list of the files and directories in the directory at the path used as argument.
+
+- **`os.getcwd()`** - returns the path to current working directory.
+
+#### `os.path`
+
+The `os` module contains also the `os.path` submodule, which provides tools to check, build, split and interact with paths.
+
+- **`os.path.isdir()`** - returns `True` if path is a directory.
+
+- **`os.path.isfile()`** - returns `True` if path is an existing regular file. 
+
+- **`os.path.exists()`** - returns `True` if path refers to an existing path or an open file descriptor.
+os.path.islink()
+
+    Return True if path refers to an existing directory entry that is a symbolic link. Always False if symbolic links are not supported by the Python runtime.
+
+    Changed in version 3.6: Accepts a path-like object.
+
+os.path.ismount()
+
+    Return True if pathname path is a mount point: a point in a file system where a different file system has been mounted. 
+- **os.path.basename()** - return the base name of the argument pathname.
 
 
-### `sys.exit()`
-        To make the program terminate; requires import of sys module.
+os.path.commonpath(paths)
+
+    Return the longest common sub-path of each pathname in the iterable paths. Raise ValueError if paths contain both absolute and relative pathnames, if paths are on different drives, or if paths is empty. Unlike commonprefix(), this returns a valid path.
+
+    Added in version 3.5.
+
+    Changed in version 3.6: Accepts a sequence of path-like objects.
+
+    Changed in version 3.13: Any iterable can now be passed, rather than just sequences.
+
+os.path.commonprefix(list)
+Return the longest path prefix (taken character-by-character) that is a prefix of all paths in li
+
+os.path.dirname(path)
+
+    Return the directory name of pathname path. This is the first element of the pair returned by passing path to the function split().
+
+    Changed in version 3.6: Accepts a path-like object.
 
 
-### `random.choice()`
+
+
+ os.path.getsize(path)
+
+    Return the size, in bytes, of path.
+
+
+
+
+
+ os.path.join(path, *paths)
+
+    Join one or more path segments intelligently. The return value is the concatenation of path and all members of *paths, with exactly one directory separator following each non-empty part, except the last. That is, the result will only end in a separator if the last part is either empty or ends in a separator. If a segment is an absolute path (which on Windows requires both a drive and a root), then all previous segments are ignored and joining continues from the absolute path segment.
+
+ os.path.realpath(path, *, strict=False)
+
+    Return the canonical path of the specified filename, eliminating any symbolic links encountered in the path (if they are supported by the operating system)
+ os.path.relpath(path, start=os.curdir)
+
+    Return a relative filepath to path either from the current directory or from an optional start directory.
+ os.path.split(path)
+
+    Split the pathname path into a pair, (head, tail) where tail is the last pathname component and head is everything leading up to that. The tail part will never contain a slash; if path ends in a slash, tail will be empty. If there is no slash in path, head will be empty. If path is empty, both head and tail are empty. Trailing slashes are stripped from head unless it is the root (one or more slashes only). In all cases, join(head, tail) returns a path to the same location as path (but the strings may differ). Also see the functions dirname() and basename().
+
+ os.path.splitroot(path)
+
+    Split the pathname path into a 3-item tuple (drive, root, tail) where drive is a device name or mount point, root is a string of separators after the drive, and tail is everything after the root. Any of these items may be the empty string. In all cases, drive + root + tail will be the same as path.
+
+    On POSIX systems, drive is always empty. The root may be empty (if path is relative), a single forward slash (if path is absolute), or two forward slashes (implementation-defined per IEEE Std 1003.1-2017; 4.13 Pathname Resolution.) For example:
+    >>>
+
+splitroot('/home/sam')
+('', '/', 'home/sam')
+
+splitroot('//home/sam')
+('', '//', 'home/sam')
+
+splitroot('///home/sam')
+('', '/', '//home/sam')
+
+
+
+### `datetime`
+
+### `random`
+
+`random.choice()`
         Requires import of random module; accepts lists as arguments and chooses an item in the list at random.
-
-
-### `random.shuffle()`
+`random.shuffle()`
         Requires import of random module; accepts lists as arguments and rearranges the items in the list at random.
 
-
+### `copy`
 copy.copy()
 copy.deepcopy()
         Require import of copy module; the copy() and deepcopy() functions can be used to make a duplicate copy of a mutable value like a list or dictionary, not just a copy of a 
@@ -874,41 +1022,40 @@ copy.deepcopy()
         and deepcopy() can be used to create a copy of it, so that now there are two values with different ids. The deepcopy() function is the same as copy(), but is needed in case 
         of lists that contain other lists (if those inner lists are to be copied).
 
-### `argparse` module
+### `argparse`
 
 Check the [guide to `argparse`](#parsing-arguments-in-python---the-argparse-module).
 
-#### `argparse.ArgumentParser()`
+`argparse.ArgumentParser()`
+`.add_argument()` method
+`.parse_args()` method
 
-#### `.add_argument()` method
 
-#### `.parse_args()` method
+### `re`
 
-### `re` module
-
-#### `re.search()`
+`re.search()`
 
 Scans through a string looking for the first location where the regular expression pattern produces a match, and returns `True` or `False` depending on wether the string matches the regex. Useful as condition in `if`, `for` and `while` statements.
 
 Syntax: `re.search(regex, string)`
 
-#### `re.findall()`
+`re.findall()`
 
 Extracts the string(s) matching the regex as a list object.
 
 Syntax: `re.findall(regex, string)`
 
-#### `re.fullmatch()`
+`re.fullmatch()`
 
 The same as `re.search()` but returns `True` if the whole string matches.
 
-#### `re.split`
+`re.split`
 
 Splits the string by the occurrences of the regex and returns a list (only if capturing parentheses are used in the pattern).
 
 Syntax: `re.split(regex, string)`
 
-#### `.group` method
+`.group` method
 
 Extracts from a match object the group corresponding to the argument number.
 
@@ -923,35 +1070,6 @@ Example:
 >>> match_lst.group(0)
 'Bulbasaur'
 ```
-
-### `os` module
-
-#### `os.system()`
-
-Allows to execute system commands. If the called command generates any output, it will be sent to stdout stream. [`subprocess.call()`](#subprocesscall) does the same thing.
-
-```py
->>> import os
->>> cmd = 'date'
->>> returned_value = os.system(cmd)
-Sat 20 May 12:34:29 CEST 2023
->>> print(returned_value)
-0
-```
-
-In the example above, output from the used command is automatically printed to stdout. The variable to which the function call's output was assigned only contains the exit status.
-
-#### `os.listdir()`
-
-Returns a list of the files and directories in the directory at the path used as argument.
-
-#### `os.path.isdir()`
-
-Returns `True` if the item at the argument's path is a directory, `False` if it isn't.
-
-#### `os.getcwd()`
-
-Returns the path to current working directory.
 
 ### `subprocess` module
 
@@ -979,8 +1097,6 @@ Calls a shell function but it allows to catch the function's output instead of t
 >>> print(returned_value)
 b'Sat 20 May 12:41:45 CEST 2023\n'
 ```
-
-### `sys` module
 
 ## Methods
 
@@ -1330,7 +1446,7 @@ args = parser.parse_args()
 ```
 
 
-
+```
 # returns output as byte string
 returned_output = subprocess.check_output(cmd)
 
@@ -1340,13 +1456,32 @@ print('Current date is:', returned_output.decode("utf-8"))
 It will produce output like the following
 
 Current date is: Thu Oct  5 16:31:41 IST 2017
+```
 
 
-
-
-
-
-
-
-
+```
 https://stackoverflow.com/questions/20802056/python-regular-expression-1
+```
+
+
+
+
+
+```
+# in a list (array-like object)
+data = [ 1,  4,5,6, 10, 15,16,17,18, 22, 25,26,27,28]
+# np.diff() takes as input the array and returns the differences between each consecutive number in the array (4-1=3, 5-4=1...)
+print(np.diff(data))
+# np.where() takes as arguments an array-like object and a boolean expression.
+# It returns the indices of the input array for which the expression evaluates to True. In this case, the indices of values != 1,
+# i.e. the indices of the input (and thus also the original) array for which the difference with the following number is not 1,
+# which means that the 2 numbers are not consecutive
+print(np.where(np.diff(data) != 1))
+# the index is necessary because np.where() returns an array of arrays, in this case with only one element because only one condition
+# was passed. Thus we need to extract the only inner array in the outer array, i.e. index 1
+print(np.where(np.diff(data) != 1)[0])
+# np.split() splits the array at the specified indices, in this case all positions of numbers not followed by a consecutive number.
+# Since the split is non-inclusive of the index on which the split is performed, it's necessary to add 1 to each index to split after
+# the number not followed by a consecutive number.
+print(np.split(data, np.where(np.diff(data) != 1)[0]+1))
+```
