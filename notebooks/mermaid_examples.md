@@ -1,9 +1,14 @@
+# Mermaid Examples
+
+## Cool Pastel Shades
+
 ```mermaid
 flowchart LR
 
 #f0b5cb("#f0b5cb"):::A -->
 #f0dbb5("#f0dbb5"):::B -->
-#b6e0f6("#b6e0f6"):::C -->
+#b6e0f6("#b6e0f6"):::C
+
 #d9defa("#d9defa"):::D -->
 #c9c6c8("#c9c6c8"):::E
 
@@ -12,11 +17,38 @@ classDef B fill:#f0dbb5,stroke-width:0px,stroke:#dd1c75
 classDef C fill:#b6e0f6,stroke-width:0px,stroke:#dd1c75
 classDef D fill:#d9defa,stroke-width:0px,stroke:#dd1c75
 classDef E fill:#c9c6c8,stroke-width:0px,stroke:#dd1c75
+```
 
+## Cool Bright-Rainbowy Shades
+
+```mermaid
+flowchart LR
+
+style E fill:#f62157,stroke-width:0px
+style G fill:#da73b3,stroke-width:0px
+style A fill:#c87deb,stroke-width:0px
+style B fill:#7db4ef,stroke-width:0px
+style F fill:#8bdd78,stroke-width:0px
+style C fill:#f8d953,stroke-width:0px
+style D fill:#ff9700,stroke-width:0px
+
+
+E(#f62157) -->
+G(#da73b3) -->
+A(#c87deb) -->
+B(#7db4ef) -->
+F(#8bdd78) -->
+C(#f8d953) -->
+D(#ff9700)
 ```
 
 
-:::mermaid
+
+## Some Demo
+
+### 1
+
+```mermaid
 flowchart LR
 
 style IN fill:#7db4ef,stroke-width:0px,stroke:#dd1c75
@@ -56,9 +88,11 @@ end
 style L fill:#c9c6c8,stroke-width:0px,stroke:#d8a2f8
 style A fill:#d9defa,stroke-width:0px,stroke:#d8a2f8
 style B fill:#d9defa,stroke-width:0px,stroke:#d8a2f8
-:::
+```
 
-:::mermaid
+### 2
+
+```mermaid
 flowchart TB
 
 style IN fill:#7db4ef,stroke-width:0px,stroke:#dd1c75
@@ -83,30 +117,9 @@ style out fill:#8bdd78,stroke-width:0px
 end
 
 style L fill:#eedef7,stroke-width:0px,stroke:#d8a2f8
-:::
+```
 
-
-:::mermaid
-flowchart TB
-
-style E fill:#f62157,stroke-width:0px
-style G fill:#da73b3,stroke-width:0px
-style A fill:#c87deb,stroke-width:0px
-style B fill:#7db4ef,stroke-width:0px
-style F fill:#8bdd78,stroke-width:0px
-style C fill:#f8d953,stroke-width:0px
-style D fill:#ff9700,stroke-width:0px
-
-
-E(#f62157) -->
-G(#da73b3) -->
-A(#c87deb) -->
-B(#7db4ef) -->
-F(#8bdd78) -->
-C(#f8d953) -->
-D(#ff9700)
-
-:::
+### 3
 
 ```mermaid
 flowchart TB
@@ -167,5 +180,4 @@ s4 -->| discarded | Hcov_low
 Hcov_high --> s5
 s5 -->| retained | Vcov_high
 s5 -->| discarded | Vcov_low
-
 ```
