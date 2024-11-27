@@ -17,4 +17,6 @@ Go to:
 * [notes to be integrated into Python notes](./notes.md)
 * [JavaScript notes](notebooks/javascript_notes.md)
 
+More stuff:
+
 * [Mermaid examples](notebooks//mermaid_examples.md)
