@@ -16,7 +16,7 @@ classDef E fill:#c9c6c8,stroke-width:0px,stroke:#dd1c75
 ```
 
 
-::: mermaid
+:::mermaid
 flowchart LR
 
 style IN fill:#7db4ef,stroke-width:0px,stroke:#dd1c75
@@ -58,7 +58,7 @@ style A fill:#d9defa,stroke-width:0px,stroke:#d8a2f8
 style B fill:#d9defa,stroke-width:0px,stroke:#d8a2f8
 :::
 
-::: mermaid
+:::mermaid
 flowchart TB
 
 style IN fill:#7db4ef,stroke-width:0px,stroke:#dd1c75
@@ -86,7 +86,7 @@ style L fill:#eedef7,stroke-width:0px,stroke:#d8a2f8
 :::
 
 
-::: mermaid
+:::mermaid
 flowchart TB
 
 style E fill:#f62157,stroke-width:0px
