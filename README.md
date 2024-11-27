@@ -16,3 +16,5 @@ Go to:
 * [Pandoc commands](notebooks/pandoc_commands.md)
 * [notes to be integrated into Python notes](./notes.md)
 * [JavaScript notes](notebooks/javascript_notes.md)
+
+* [Mermaid examples](notebooks//mermaid_examples.md)
