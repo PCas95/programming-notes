@@ -2,15 +2,17 @@
 
 ## Getting started
 
+*This first section includes few basic definitions to start running some test code and short examples on how to manage taking input for Python scripts.*
+
 ### Taking input
 
 #### Reading files
 
-Python's way to read files is very much like Perl's: it has an [`open()` function](#open) to obtain a reference to the specified file, that must be assigned to a special variable called a "filehandle".
+To read files in Python, we use the [`open()` function](#open). `open()` returns a reference to the argument file, that must be assigned to a special variable called a "filehandle".
 
-To read a file line by line, a `for` loop with the `in` operator is used. We also have an equivalent for Perl's `chomp()`: the method [`.rstrip()`](#methods).
+To read a file line by line, a `for` loop is used. We also have an equivalent for Perl's `chomp()`: the [string](#strings) method [`.rstrip()`](#methods).
 
-To read the whole file we use another method in Python ([`.read()`](#methods)), together with the assignment to a [variable](#variables). This will read the whole file as a single line (newlines are in between the original lines as escape characters `\n`). The whole file can also be read using the `.readlines()` method, generating a list; each item of the list is a string: the file's lines.
+To read the whole file we use another method: ([`.read()`](#methods)), together with the assignment to a [variable](#variables). This will read the whole file as a single line (lines are separated by escape characters `\n` representing newlines). The whole file can also be read using the `.readlines()` method, generating a list; each item of the list will be a string representing one of the file's lines.
 
 > **Note:** `.readlines()` and `.read()` will read empty strings if the filehandle's contents have already been parsed.
 
@@ -30,7 +32,7 @@ lines_as_list = fh.readlines()
 
 #### Getting arguments from command line
 
-Python can [import](#import) the `sys` module to use the `sys.argv()` function, which allows Python to take inputs from command line:
+Python can [import](#import) the `sys` module to access the `sys.argv` array object, which allows Python to take inputs from command line:
 
 ```py
 import sys
@@ -50,23 +52,25 @@ fhandle = open(inp_1)
 
 In the examples above, the elements of the ARGV array are assigned to variables just like in Perl. Then a line with the `open()` function is used to create the filehandles.
 
-Like in Perl, in the ARGV array the index 0 is reserved to the script, so the arguments passed through terminal will start at index 1.
+Like in Perl, in the ARGV array the index 0 is reserved to the script name, so the arguments passed through terminal will start at index 1.
 
 The second example uses a shortcut to assign multiple variables at once.
 
-Using `sys.argv()` is suited for small scripts, but for full-fledged programs that may have multiple options or need to be shared, a much better way to get inputs is [`argparse()`](#argparse-module).
+Using `sys.argv()` is suited for small scripts, but for full-fledged programs that may have multiple options or need to be shared, the gold standard is the [`argparse()`](#argparse-module) module.
 
 ### Argument
 
-An argument is a value being passed to a function when the function is called (what we type between parentheses).
+An argument is a value being passed to a function, when the function is called (what we type between parentheses).
 
 ### Parameter
 
-Variables that have arguments assigned to them.
+A Parameter is any variable that stores an argument for a function.
 
 ### Backslash
 
-The `\` character, as in Bash coding, can be used as a "line continuation character", telling Python that the line of code continues on the following line. In that case indentation is not relevant. `\` can be used to make long lines of code more readable.
+The `\` character, as in Bash coding, can be used as a "line continuation character", telling Python that the line of code continues on the following line. In that case indentation is not relevant. `\` can be used to make long lines of code or text more readable.
+
+The backslash is also an "escape character", used to prevent special characters from being interpreted or to create special characters like `\n` or `\t`.
 
 ## Variables
 
@@ -76,27 +80,30 @@ Example: `my_var = "bananas"`
 
 An input can also be a variable: `std_in = input()`
 
-> Setting a variable name has some restrictions:
->
->- it can't start with a number;
->- can't be more than one word (no blank spaces allowed);
->- can only contain letters, numbers and underscore (`_`).
+**Restrictions for naming variables**
+
+Variable names:
+- can't start with a number;
+- can't be more than one word (no blank spaces allowed);
+- can only contain letters, numbers and underscore (`_`).
 
 ## Keywords or reserved words
 
 Some words in Python cannot be used to define functions, variables or other features of the programming language. This happens because such words are **reserved** for Python, which uses them for key actions. Examples of this behaviour are words used for [statements](#statements), as [operators](#operators) or as [functions](#functions), like `for`, `def`, `in`, `not`, `class`, or `import`.
 
-These words are commonly known as **Keywords**. True keywords **cannot be used** and will cause the script to throw an error if improperly used in a script. Other words used in Python, like those of many functions, will not cause the script to crash if used for other purposes, but they **should not be used**: it's not good practice and it causes confusion in the script, which becomes less readable. As such, the misuse of such words is discouraged. 
+These words are commonly known as **Keywords**. True keywords **cannot be used** and will cause the script to throw an error if improperly used in a script. Other words used in Python, like those of many functions, will not cause the script to crash if used for other purposes, but they **should not be used**: using them it's not good practice since they cause confusion in the script, which becomes less readable. As such, the misuse of such words is discouraged. 
 
 ## Values
 
-*SEQUENCE DATA TYPES:*
+Values are fundamental entities that are manipulated by a program, like numbers and strings of text. Values belong specific data types, which describe the nature of the value. Data types, depending on their characteristics, can be mutable or immutable.
 
-*In Python sequence data types include lists, strings, range objects returned by* `range()`*, and tuples. Many of the things that can be done with lists can also be done with strings, for example. This include using the* `in` *and* `not in` *operators, slicing, indexing, using in* `for` *loops and using them as arguments for the* `len()` *function.*
+**Sequence Data Types**
 
-*MUTABLE AND IMMUTABLE DATA TYPES:*
+*In Python, sequence data types include lists, strings, range objects returned by* `range()`*, and tuples. Many of the things that can be done with lists can also be done with strings, for example. This include using the* `in` *and* `not in` *operators, slicing, indexing, using them as iterables in* `for` *loops, or using them as arguments for the* `len()` *function.*
 
-*In Python, some values can be changed, others cannot. A list is a mutable data type, since it can have values added, removed, or changed. A string, on the other hand, is immutable, because it cannot be changed. For example, although strings support indexing (being sequences), indices and slices cannot be used to change part of the string value, since that would raise a* `TypeError` *[exception](# <!-- here link to paragraph on try-except -->). The proper way to "mutate" a string is by using slicing and concatenations to build a new string, or to use [string methods](#methods-for-strings-string-library).*
+**Mutable and Immutable Data Types**
+
+*In Python, some values can be changed, others cannot. A list is mutable, since it can have values added, removed, or changed. A string, on the other hand, is immutable, because it cannot be changed. For example, although strings support indexing (being sequences), indices and slices cannot be used to change part of the string value, since that would raise a* `TypeError` *[exception](# <!-- here link to paragraph on try-except -->). The proper way to "mutate" a string is by using slicing and concatenations to build a new string, or to use [string methods](#methods-for-strings-string-library).*
 
 ### Integers
 
@@ -110,7 +117,7 @@ Floats (or floating point numbers) are numbers with decimals.
 
 ### Strings
 
-Strings are text values, always written between quotes (`''` or `""`).
+Strings are text values, always written in quotes (`''` or `""`).
 
 > **Note:** input from shell is always a string value.
 
@@ -132,9 +139,9 @@ Examples: `[1, 2, 3]` or `["bulbasaur", "charmander", "squirtle"]`.
 
 A list can contain values of different types together, even other list values (**nested lists**). An empty list `[]` is an empty value (same as `""`).
 
-Lists (or variables that contain a list, or functions that return a list, like `range()`) are commonly iterated through in [`for` loops](#the-for-loop).
+Lists (or variables that contain a list, or functions that return a list, like `range()`) are commonly iterated through with [`for` loops](#the-for-loop).
 
-> **Note**: lists can ignore indentation: Python knows that a list is not over until there is the closing square bracket, so a list can be written in multiple lines to make it more readable. Just like hashes in Perl, also Python [dictionaries](#dictionaries) can be treated the same way.
+> **Note**: lists can ignore indentation: Python knows that a list is not over until the closing square bracket, so a list can be written in multiple lines to make it more readable. Just like hashes in Perl, also Python [dictionaries](#dictionaries) can be treated the same way.
 
 #### Indices
 
