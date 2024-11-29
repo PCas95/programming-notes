@@ -2,7 +2,7 @@
 
 ## Getting started
 
-*This first section includes few basic definitions to start running some test code and short examples on how to manage taking input for Python scripts.*
+*This first section includes few basic definitions to start running some test code and short examples on how to take input for Python scripts.*
 
 ### Taking input
 
@@ -12,9 +12,9 @@ To read files in Python, we use the [`open()` function](#open). `open()` returns
 
 To read a file line by line, a `for` loop is used. We also have an equivalent for Perl's `chomp()`: the [string](#strings) method [`.rstrip()`](#methods).
 
-To read the whole file we use another method: ([`.read()`](#methods)), together with the assignment to a [variable](#variables). This will read the whole file as a single line (lines are separated by escape characters `\n` representing newlines). The whole file can also be read using the `.readlines()` method, generating a list; each item of the list will be a string representing one of the file's lines.
+To read the whole file we use another method: ([`.read()`](#methods)), together with the assignment to a [variable](#variables). This will read the whole file as a single line (lines are separated by escape characters `\n` representing newlines). We can also read the whole file using the `.readlines()` method, which returns a list: each item of the list will be a string representing one of the file's lines. Finally, the `.readline()` method reads one line from the file.
 
-> **Note:** `.readlines()` and `.read()` will read empty strings if the filehandle's contents have already been parsed.
+> **Note:** `.readlines()` and `.read()` will read empty strings if the filehandle's contents have already been parsed. Lines read with `.readline()` will count as parsed, so they will not be returned later by methods that read the file's lines (*e.g.* if we use `.readline()` twice on the same file, the first time we read the first line, while the second time we read the second line).
 
 Examples:
 
@@ -50,9 +50,9 @@ inp_1, inp_2 = sys.argv[1:]
 fhandle = open(inp_1)
 ```
 
-In the examples above, the elements of the ARGV array are assigned to variables just like in Perl. Then a line with the `open()` function is used to create the filehandles.
+In the examples above, elements of the ARGV array are assigned to variables just like in Perl. Then a line with the `open()` function is used to create the filehandles.
 
-Like in Perl, in the ARGV array the index 0 is reserved to the script name, so the arguments passed through terminal will start at index 1.
+Like in Perl, the index 0 of the ARGV array is reserved for the script name, so the arguments passed through terminal will start at index 1.
 
 The second example uses a shortcut to assign multiple variables at once.
 
@@ -68,13 +68,13 @@ A Parameter is any variable that stores an argument for a function.
 
 ### Backslash
 
-The `\` character, as in Bash coding, can be used as a "line continuation character", telling Python that the line of code continues on the following line. In that case indentation is not relevant. `\` can be used to make long lines of code or text more readable.
+The `\` character, as in Bash coding, can be used as a "line continuation character", telling Python that the line of code continues on the following line. In that case indentation is not relevant. The backslash can be used to make long lines of code or text more readable.
 
 The backslash is also an "escape character", used to prevent special characters from being interpreted or to create special characters like `\n` or `\t`.
 
 ## Variables
 
-The character `=` is called the "commute operator": it allows to set a variable, so that every time the variable is called, it will be expanded (or interpolated) to the data stored into it.
+The character `=` is called the "commute operator": it allows to set a variable, so that every time the variable is called, it will be expanded (or **interpolated**) to the data stored into it.
 
 Example: `my_var = "bananas"`
 
@@ -85,13 +85,13 @@ An input can also be a variable: `std_in = input()`
 Variable names:
 - can't start with a number;
 - can't be more than one word (no blank spaces allowed);
-- can only contain letters, numbers and underscore (`_`).
+- can only contain letters, numbers and underscore characters (`_`).
 
-## Keywords or reserved words
+## Keywords or Reserved Words
 
 Some words in Python cannot be used to define functions, variables or other features of the programming language. This happens because such words are **reserved** for Python, which uses them for key actions. Examples of this behaviour are words used for [statements](#statements), as [operators](#operators) or as [functions](#functions), like `for`, `def`, `in`, `not`, `class`, or `import`.
 
-These words are commonly known as **Keywords**. True keywords **cannot be used** and will cause the script to throw an error if improperly used in a script. Other words used in Python, like those of many functions, will not cause the script to crash if used for other purposes, but they **should not be used**: using them it's not good practice since they cause confusion in the script, which becomes less readable. As such, the misuse of such words is discouraged. 
+These words are commonly known as **Keywords**. True keywords **cannot be used** and will cause the script to throw an error if improperly used in a script. Other "reserved" words used in Python, like those of many functions, will not cause the script to crash if used for other purposes, but they **should not be used**: using them it's not good practice since they cause confusion in the script, which becomes less readable. As such, the misuse of such words is discouraged. 
 
 ## Values
 
