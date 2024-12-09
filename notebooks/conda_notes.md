@@ -49,3 +49,6 @@ conda install package_name
 Deactivate the Environment:
 
 conda deactivate
+
+list envs:
+conda env list
