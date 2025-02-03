@@ -94,6 +94,12 @@ A third keyword to declare variables in JavaScript is `const`, which has the sam
 - Read-only (immutable) variables are written in uppercase;
 - Mutable values are written in lowercase or camelCase.
 
+#### Scope of a Variable
+
+Variables have a *scope*, which refer to a variable's visibility: a variable created outside any block has **global scope**, which means that is always available and visible in any other part of the code. On the other hand, variables that are declared inside a function will have **local scope**, so they will not be available outside that function. 
+
+> **Warning:** Variables declared without the `let` or `const` keywords are automatically created in the global scope. This can create unintended consequences in other part of the code.
+
 #### Properties
 
 Characteristics of values can be consulted by using that value's **properties**, which are not dissimilar in concept from Python's object attributes. Properties are consulted by appending a period `.` and the name of the property to a value.
