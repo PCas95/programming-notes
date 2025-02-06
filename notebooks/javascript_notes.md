@@ -24,7 +24,7 @@ There are 8 different **data types** in JavaScript:
 
 - `undefined`
 - `null`
-- `boolean`
+- [`boolean`](#boolean-values)
 - [`string`](#string-data-type)
 - `symbol`
 - `bigint`
@@ -118,12 +118,19 @@ The proper way to "modify" an immutable value is to assign to a new variable the
 
 These are the characteristics of values, regarding mutability:
 
-| Value | Mutable/Immutable |
-| --- | --- |
-| strings | immutable |
-| array entries | mutable |
+| Value     | Mutable/Immutable |
+| --------- | ----------------- |
+| string    | Immutable         |
+| array     | Mutable           |
+| number    | Immutable         |
+| boolean   | Immutable         |
+| undefined | Immutable         |
+| null      | Immutable         |
+| bigInt    | Immutable         |
+| symbol    | Immutable         |
+| object    | Mutable           |
 
-Note that immutability of a value means that that value **cannot be changed in place**, but it doesn't mean that one cannot reassign a new value to the variable:
+Note that immutability of a value means that the value **cannot be changed in place**, but it doesn't mean that one cannot reassign a new value to the variable:
 
 ```js
 let myString = "Bunny";
