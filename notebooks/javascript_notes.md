@@ -361,7 +361,7 @@ let myOutcome = myFunction(pokeDex, 1);
 
 Note that since everything on the right side of the [assignment operator](#declaration-keywords-and-the-assignment-operator-) is evaluated before assignment, a function's returned value can be stored in a value immediately.
 
-A function usually has a `return` statement, but it doesn't have to. In case the `return` statement is missing, the function will still process the inner code, but the reurned value will be `undefined`.
+A function usually has a `return` statement, but it doesn't have to. In case the `return` statement is missing, the function will still process the inner code, but the returned value will be `undefined`.
 
 ## The `if` statement
 
