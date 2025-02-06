@@ -98,7 +98,9 @@ A third keyword to declare variables in JavaScript is `const`, which has the sam
 
 Variables have a *scope*, which refer to a variable's visibility: a variable created outside any block has **global scope**, which means that is always available and visible in any other part of the code. On the other hand, variables that are declared inside a function will have **local scope**, so they will not be available outside that function. 
 
-> **Warning:** Variables declared without the `let` or `const` keywords are automatically created in the global scope. This can create unintended consequences in other part of the code.
+> **Warning:** variables declared without the `let` or `const` keywords are automatically created in the global scope. This can create unintended consequences in other part of the code.
+
+> **Note:** local variables can have the same name as global variables. In that case, the variable with local scope takes precedence.
 
 #### Properties
 
@@ -310,6 +312,10 @@ The `.shift()` method removes the first element of an array and works in the sam
 
 The `.unshift()` method adds an element at the beginning (left side) of an array. It works just like `.push()`.
 
+### Boolean Values
+
+Boolean values can only be of 2 types: `true` or `false` (all lowercase, contrary to Python), which are mutually exclusive.
+
 ## Functions
 
 Functions are reusable parts of code: they can be defined and later called or *invoked*. The syntax to define a function is halfway between Python's functions and Perl's subroutines, and requires the **`function`** keyword:
@@ -345,6 +351,122 @@ function myFunction(arr, ix) {
 
 let myOutcome = myFunction(pokeDex, 1);
 ```
+
+Note that since everything on the right side of the [assignment operator](#declaration-keywords-and-the-assignment-operator-) is evaluated before assignment, a function's returned value can be stored in a value immediately.
+
+A function usually has a `return` statement, but it doesn't have to. In case the `return` statement is missing, the function will still process the inner code, but the reurned value will be `undefined`.
+
+## The `if` statement
+
+The `if` keyword tells JavaScript to execute the code in the curly braces under certain conditions, defined between parentheses. These conditions are known as Boolean conditions and they have to evaluate to `true` or `false`.
+
+```js
+function evaluator(condition) {
+	if (condition) {
+		return "The condition was true";
+	}
+}
+```
+
+Any code can be used to set up a condition, as long as it evaluates to a boolean value. [Comparison operators](#comparison-operators) return boolean values:
+
+```js
+if (myVal == 0) {
+	return "I've got nothing";
+}
+```
+
+### Comparison Operators
+
+| Operator | Name                              | Returned Value                                                                               |
+| -------- | --------------------------------- | -------------------------------------------------------------------------------------------- |
+| `==`     | Equality Operator                 | `true` if values are equal, with type coercion                                               |
+| `===`    | Strict Equality Operator          | `true` if values are equal, no type coercion                                                 |
+| `!=`     | Inequality Operator               | `true` if values are not equal, with type coercion                                           |
+| `!==`    | Strict Inequality Operator        | `true` if values are not equal, no type coercion                                             |
+| `>`      | Greater Than Operator             | `true` if left-hand number is greater than right-hand number, with type coercion             |
+| `<`      | Less Than Operator                | `true` if left-hand number is lower than right-hand number, with type coercion               |
+| `>=`     | Greater Than Or Equal To Operator | `true` if left-hand number is greater than or equal to right-hand number, with type coercion |
+| `<=`     | Less Than Or Equal To Operator    | `true` if left-hand number is lower than or equal to right-hand number, with type coercion   |
+
+#### Type Coercion
+
+JavaScript can compare values of different types, but it has to force a value type into another to do it. This process is called **Type Coercion** and allows both of these equality checks to return `true`:
+
+```js
+1 == '1' // true
+"3" == 3 // true
+```
+
+The Equality Operator (`==`), the Inequality Operator (`!=`) and all the variations of the Greater Than and Lower Than Operators, all perform Type Coercion, *i.e.* type conversion before comparison.
+
+The Strict Equality and the Strict Inequality Operators (`===` and `!==`) do not perform Type Coercion, which means that values of different types will be considered not equal:
+
+```js
+1 === 1 // true
+"3" === 3 // false
+4 !=== '4' // true
+```
+
+### The `typeof` operator
+
+In JavaScript, the type of a value can be determined using the `typeof` operator:
+
+```js
+typeof 4
+typeof "4"
+```
+
+### The Logical Operators
+
+Logical operators include AND, OR and NOT operators. They return boolean values.
+
+| Operator    | Meaning     | Operands | Returned Value                     |
+| ----------- | ----------- | -------- | ---------------------------------- |
+| `&&`        | logical AND | 2        | `true` if both operands are `true` |
+| `||`        | logical OR  | 2        | `true` if either operand is `true` |
+| `!`         | logical NOT | 1        | `true` if the operand is `false`   |
+
+## `else` Statements
+
+The `else` statement starts a block *after* an `if` block of code. If present, the code of the `else` block will only be executed if the `if` block is not executed, *i.e.* if the condition for the `if` statement evaluates to `false`:
+
+```js
+if (num > 10) {
+  return "Bigger than 10";
+} else {
+  return "10 or Less";
+}
+```
+
+## `else if` Statements
+
+Contrary to other languages like Python, Perl or Bash, JavaScript doesn't have a corresponding `elif` keyword. To obtain the same result, that is to check for multiple conditions (and execute different block of codes accordingly), `else` and `if` statements can be chained together:
+
+```js
+if (num == 10) {
+	return "Equals 10";
+} else if (num > 10) {
+	return "Bigger than 10";
+} else {
+	return "10 or Less";
+}
+```
+
+Even though statements can be chained, `else` and `if` remain two separate keywords.
+
+> **Note:** as with any logical check, order is important. Code is executed from top to bottom, so we need to be mindful of what statement comes first, otherwise some blocks may never execute.
+
+> **Note:** in a complex logic of `if`/`else` statements, **the `if` statement always comes first**, **`else if` statements always come after an `if`** (or `else if` statement) and **the `else` statement always comes last**.
+
+
+
+
+
+
+
+
+
 
 
 
