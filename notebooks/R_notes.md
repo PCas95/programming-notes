@@ -2,6 +2,60 @@
 
 *Each R script begins with the header* `#!/usr/bin/env Rscript`
 
+## Basic R syntax
+
+- Variables
+  ```R
+  var <- 42
+  ```
+- Comments
+  ```R
+  # This is a comment
+  ```
+- Keywords
+  `if`, `else`...
+
+- Errors
+- Warnings
+- Messages
+
+### Basic operations
+
+The kinds of operations that can be done in R fall in one of the following categories:
+    - Arithmetic (*e.g.* `2 + 5`) 
+    - Relational (*e.g.* `2 < 5`)
+    - Logical TRUE (*e.g.* `TRUE | FALSE`, `TRUE & FALSE`...)
+    - Commands (*e.g.* `getwd()` and other functions)
+
+### Working directory
+
+```R
+> getwd()
+[1] "/home/IZSNT/p.castelli"
+> setwd("/home/IZSNT/p.castelli/Documents/R_course_20250217")
+> getwd()
+[1] "/home/IZSNT/p.castelli/Documents/R_course_20250217"
+```
+
+### Objects and data types
+
+- Objects: "Everything that exists in R is an object";
+- Values: "Everything that happens in R is a funciton call";
+- Classes: (numeric, integer, character, logical, function, missing value) each type of object (vectors, dataframes *etc* can store values of one or more classes. Some have limitations regarding the type of classes can be stored in that object.
+
+> Use `mode()` to show the class of an object.
+
+#### Naming objects
+
+- DOs
+    - lowercase and uppercase
+    - underscore
+    - numbers 
+
+- DON'Ts
+    - non-alphanumeric characters in general, especially not `-` and spaces
+    - reserved words (keywords and functions)
+    - start with a number
 
 ## Packages
 
@@ -89,40 +143,45 @@ Vectors are containers of contiguous data. R, contrary to other programming lang
 - **Character** (strings);
 - **Logical** (the 2 Boolean values TRUE and FALSE).
 
+So a vector is an ordered set of entries, usually defined with the function [`c()`](#c). Vectors can be concatenated to each other.
+
+> Vectors can also be crated using other functions like, `rep()` and `seq()`.
+
 ### `c()`
 
-Returns a vector.
+Returns a vector of the values used as arguments.
 
 ### `rownames()`
 ### `colnames()`
 
-#Recycling
-A feature of vectors is *recycling*: if operations are being made with vectors of different leghts, R will reiterate them for each element in the vector. This allows, for example, to add a single value to all the elements of a longer vector. Since this is an intentional behavior, R will warn us only if the longer vector's lenght is not a multiple of the shorter vector's lenght. Many of R's mathematical functions and all of its operators are vectorized (able to deal with vectors, thanks to recycling). 
+# Recycling
 
-#Type coercion
+A feature of vectors is *recycling*: if operations are being made with vectors of different lengths, R will reiterate them for each element in the vector. This allows, for example, to add a single value to all the elements of a longer vector. Since this is an intentional behavior, R will warn us only if the longer vector's length is not a multiple of the shorter vector's length. Many of R's mathematical functions and all of its operators are vectorized (able to deal with vectors, thanks to recycling). 
+
+# Type coercion
 Since all elements in a vector must have homogenous data type, R silently "coerces" elements so that they all have the same type, doing so in the way that causes the least amount of information loss (ex.: if a vector would contain numbers and booleans, `TRUE` and `FALSE` are converted to 1 and 0; if it would contain numbers and integers, integers are transformed into numbers).
 
-#Indexes
+# Indices
 Just like lists in Python, we can retrieve single values from a vector through indexing: `my_vector[4]`, but in contrast to Python, indexing starts from 1 rather than 0.
 By combining assignment with indexing we can change specific values of a vector (ex.: `my_vector[4] <- 42`). The values in a vector can have names, which are set and accessed with `c()` and `names()`, and can be accessed just like with indexing through their name (ex.: my_vector['bulba']). Even indexing is vectorized, so we can access multiple values in a vector (*subsetting*): `my_vector[c(2, 3)]`, or slice contiguous elements in a vector (identical to Python's slices): `my_vector[2:5]`.
 Negative indexes are used in R to exclude specific elements or slices (but in the latter case the syntax requires the `-` to be outside a parentheses grouping: `my_vector[-(3:6)]`).
 Thanks to indexing's vector nature we can also repeat specific values in vectors.
 
-#Logical vectors
+# Logical vectors
 Comparison operators are also vectorized, so they can be used on vectors to generate logical vectors whose values are the Boolean values calculated for the comparison of each value of the vector.
 
-#Vectors and comparison operators
+# Vectors and comparison operators
 We can subset a vector using comparison operators (ex.: `my_vector[my_vector > 2]`) or  vectorized logical operations (using AND `&`, OR `|` and NOT `!` operators).
 
-#Rearranging elements
+# Rearranging elements
 There's more than one way to change the items order in a vector:
 Rearranging with the combine function: `my_vector[c(2, 3, 1)]`;
 Reverse the elements of a vector with slices: `my_variable[5:1]`;
 Using the `order()` function to reorder the vector's value. 
 
 
-`lenght()`
-    returns the lenght of a vector.
+`length()`
+    returns the length of a vector.
 
 `c()`
     the "combine" function allows to create a long vector by listing the items to be stored in the variable separated by a comma and a space.
@@ -141,33 +200,23 @@ Using the `order()` function to reorder the vector's value.
     (`order(my_vector, decreasing=TRUE)`); is used to reorder the vector's value in ascending (`my_vector[order(my_vector)]`) or descending 
     (`my vector[order(my_vector, decreasing=TRUE)]`) order.
 
+## Logical Operators
 
-#Operators
+| Operator | Meaning                  |
+| -------- | ------------------------ |
+| >        | greater than             |
+| <        | less than                |
+| >=       | greater than or equal to |
+| <=       | less than or equal to    |
+| ==       | equal to                 |
+| !        | not equal to             |
+| &        | logical AND              |
+| |        | logical OR               |
+| !        | logical NOT              |
+| &&       | logical AND              |
+| ||       | logical OR               |
 
-    >       greater than
-
-    <       less than
-
-    >=      greater than or equal to
-
-    <=      less than or equal to
-
-    ==      equal to 
-
-    !       not equal to 
-
-    &       logical AND operator
-
-    |       logical OR operator
-
-    !       logical NOT operator
-
-    &&      logical AND for `if` statements
-
-    ||      logical OR for `if` statements
-
-
-#Special values
+## Special values
 
     `NA`              "Not Assigned". Represents missing data. Can be handled with `na.exclude()`, or you can check which elements are `NA` with `is.na()`.
 
@@ -178,7 +227,7 @@ Using the `order()` function to reorder the vector's value.
     `NaN`             "Not a Number". Can occur in computations that don't return a number. You can check if a value is `NaN` with `is.nan()`.
 
 
-#Factors
+# Factors
 Factors are an additional type of vector that store data about categories (in bioinformatics those could be chromosomes or samples). Factors can be created from vectors with the `factor()` function. Typing the name of the object (variable) containing the factor will list all the elements of the original sequence (vector) plus its `levels`.
 
 
