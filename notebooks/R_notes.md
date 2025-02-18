@@ -56,6 +56,33 @@ The kinds of operations that can be done in R fall in one of the following categ
     - non-alphanumeric characters in general, especially not `-` and spaces
     - reserved words (keywords and functions)
     - start with a number
+ 
+## Dataframes
+
+rows and columns (as a matrix) where rows are individuals and columns measured variables. Differently from matrices, can store multiple data types.
+
+> Is a collection of equally long vectors of heterogeneus data types.
+
+Main functions that work with dataframes:
+- `subset()`: extracts or filters a subset of a dataframe, matrix, or vector based on condition(s)
+- `rbind()`: adds new rows
+- `cbind()`: adds new columns
+
+> In Rstudio: in the Environment tab, when a dataframe is created, its corresponding line will have a blue button on the left. Clicking on it will expand the card to give more info about the columns that compose it. 
+
+## Functions
+
+Functions defined in R are made of:
+
+- Function Name: the name with which the functions will be called upon (the function is assigned to a variable)
+- Formals: the list of arguments
+- Body: the block of code that processes the input arguments
+
+```R
+a <- function(b) {
+  2 + b + 2
+}
+```
 
 ## Packages
 
@@ -69,6 +96,7 @@ Some important packages:
 - `ggtree`
 - `plyr`
 - `dplyr`
+- `readxl` and `writexl`
 
 ## Help and documentation
 
@@ -98,7 +126,7 @@ Lists all functions in a package (ex.: `library(help="base")`).
 | multiplication    |  `*`  |
 | division          |  `/`  |
 | square root       |  `sqrt(x)`    |
-| exponentiation    |  `exp(x)` |
+| exponentiation    |  `exp(x)` or  `**` |
 | factorial         |  `factorial(x)`   |
 | absolute value    |  `abs(x)` |
 | logarithms        |  `log(x, base=exp(1))`, `log10()`, `log2()`   |
