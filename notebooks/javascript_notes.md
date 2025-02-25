@@ -363,6 +363,8 @@ Note that since everything on the right side of the [assignment operator](#decla
 
 A function usually has a `return` statement, but it doesn't have to. In case the `return` statement is missing, the function will still process the inner code, but the returned value will be `undefined`.
 
+> When a `return` statement is executed, all the following code in the function will be skipped, because `return` will trigger the return of a value to the function and the return to execution from the function call line. 
+
 ## The `if` statement
 
 The `if` keyword tells JavaScript to execute the code in the curly braces under certain conditions, defined between parentheses. These conditions are known as Boolean conditions and they have to evaluate to `true` or `false`.
@@ -500,7 +502,20 @@ function caseInSwitch(val) {
 caseInSwitch(1);
 ```
 
+Since when the `break` is omitted from a `case` statement, the followwing `case` statements will be executed, `case` statements can be chained if we need the same output for more than one `case`. In the example below, `result = "1, 2, or 3";` will be executed if `val` is 1, 2 or 3:
 
+```js
+let result = "";
+switch (val) {
+  case 1:
+  case 2:
+  case 3:
+    result = "1, 2, or 3";
+    break;
+  case 4:
+    result = "4 alone";
+}
+```
 
 
 
