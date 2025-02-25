@@ -466,9 +466,39 @@ Even though statements can be chained, `else` and `if` remain two separate keywo
 
 > **Note:** in a complex logic of `if`/`else` statements, **the `if` statement always comes first**, **`else if` statements always come after an `if`** (or `else if` statement) and **the `else` statement always comes last**.
 
+## `switch`, `case` and `default` Statements
 
+A `switch` statement takes a value as argument and compares it using `case` statemtents.
+A `case` statement uses strict equality comparison (`===`): if the value is strictly equal to the value in the `case` statement, the code is executed. Each `case` statement needs a `break` statement to exit the `switch` comparison when equality is found, otherwise the code below will still be executed (different behaviour from `if`-`else` statements for pattern-matching).
+The `default` statement can be used as the last statement in a `switch` block to provide an alternative in case no match is found for the provided `case` statements (like the final `else` in an `if`-`else` block).
 
+In the example below, a function is defined. The function will update a variable with a string depending on the value's equality to numeric values 1, 2, 3, or 4. The `default` is executed if val is not strictly equal to any of the values in `case` statements. 
 
+```js
+function caseInSwitch(val) {
+  let answer = "";
+  switch(val) {
+    case 1:
+      answer = "alpha";
+      break
+    case 2:
+      answer = "beta";
+      break
+    case 3:
+      answer = "gamma";
+      break
+    case 4:
+      answer = "delta";
+      break
+    default:
+      answer = "stuff"
+      break;
+  }
+  return answer;
+}
+
+caseInSwitch(1);
+```
 
 
 
