@@ -16,6 +16,7 @@ Go to:
 * [Pandoc commands](notebooks/pandoc_commands.md)
 * [notes to be integrated into Python notes](./notes.md)
 * [JavaScript notes](notebooks/javascript_notes.md)
+* [Kotlin notes](notebooks/kotlin_notes.md)
 
 More stuff:
 
