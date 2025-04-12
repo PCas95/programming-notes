@@ -93,12 +93,11 @@ Generally speaking, Kotlin uses different data types to store values of increasi
 	</tr>
 	<tr>
 		<td rowspan="2">Boolean</td>
-		<td>---</td>
+		<td rowspan="2">boolean</td>
 		<td>true</td>
 		<td>---</td>
 	</tr>
 	<tr>
-		<td>---</td>
 		<td>false</td>
 		<td>---</td>
 	</tr>
@@ -127,7 +126,7 @@ val yes: Boolean = true
 val no: Boolean = false
 ```
 
-The data type of a value that is going to be stored in the variable is declared after the `val` or `var` keyword, and followed by a semicolon. After the semicolon the actual assignment is written, with the name of the variable on the left side of the assignment operator (`=`), and the value on its right side.
+The variable name is declared after the `val` or `var` keyword, and followed by a semicolon. After the semicolon the data type of a value that is going to be stored in the variable is declared, on the left side of the assignment operator (`=`), while the actual value is on the assignment operator's right side.
 
 **Kotlin's type inference** allows to omit declaring types in the code, because the compiler is able to infer the data type of the value.
 
@@ -178,4 +177,100 @@ if (pokemon == "Bulbasaur") {
 
 - `if` block is always the first one;
 - there can be any number of `else if` blocks, but only after an `if` block;
-- there can only be up to one `else` block, and has to be the last one. 
+- there can only be up to one `else` block, and it has to be the last one. 
+
+## Logical Operators
+
+| Operator | Meaning     |
+| -------- | ----------- |
+| `&&`     | Logical AND |
+| `\|\|`   | Logical OR  |
+| `!`      | Logical NOT |
+
+## Lists, Sets and Arrays
+
+Kotlin provides 3 different types of data structures to store sequences or collections of elements:
+
+| Data Structure | Read-only | Ordered | Duplicates | Memory Storage |
+| -------------- | --------- | ------- | ---------- | -------------- |
+| List           | yes       | yes     | yes        | Non-sequential |
+| Set            | yes       | no      | no         | Non-sequential |
+| Array          | no        | yes     | yes        | Sequential     |
+
+### Lists
+
+A **list** is a generic, **read-only**, **ordered** collection of elements, equal to Python's lists.
+
+A list is created using the `listOf()` function, and items from the list can be accessed using the **index operator `[]`** or the **`.get()` method.**
+
+```kotlin
+val turtles = listOf("Leonardo", "Donatello", "Raffaello", "Michelangelo")
+
+val t = turtles[0]
+val t = turtles.get(2)
+```
+
+### Sets
+
+**Sets** are generic, **unordered** collections of elements, distinguished from lists and arrays because of 2 key properties:
+- sets are unordered;
+- sets don't allow duplicate elements.
+
+Sets are created using the `setOf()` function. Elements can be added and removed using the `.add()` and `.remove()` methods. Sets are unordered and thus element retrieval is not performed with indices.
+
+```kotlin
+val starters = setOf("Bulbasaur", "Charmander", "Squirtle")
+
+starters.add("Pikachu")
+starters.remove("Pikachu")
+```
+
+> Sets and lists may be spread across memory, contrary to arrays.
+
+### Arrays
+
+An **array** is a basic data structure in Kotlin, storing an **ordered** sequence of elements. A key feature of Kotlin's arrays, (that distinguishes them from Python's lists and makes them more similar to Python's `numpy` Series), is that the elements of an array are placed in contiguous memory blocks.
+
+Arrays are a **fixed length** data structure: due to how elements are placed in contiguous memory blocks, elements may be replaced, but no more consecutive values can be added to (or removed from) the array.
+
+An array is created using the `arrayOf()` function. Elements cannot be removed from, or added to an array, but they can be freely accessed and manipulated using the **index operator `[]`**.
+
+```kotlin
+val legendary_birds = arrayOf("Articuno", "Zapdos", "Moltres")
+
+birdOfThunder = legendary_birds[1]
+legendary_birds[0] = "Lugia"
+```
+
+## Kotlin Functions
+
+A **function signature** is the line of code that defines a function's name, inputs, and outputs. In Kotlin:
+- it starts with the `fun` keyword;
+- `fun` is followed by the function's name (the string that will be used to call the function);
+- the input is written between round parentheses and its data type is declared by following the input name with a semicolon, a space and the data type;
+- parentheses are followed by a semicolon and the data type of the output returned by the function.
+
+The **function's body** is delimited by curly braces and will contain a `return` keyword which defines the return value of the function call.
+
+A **function declaration** requires both the function signature and function body:
+
+```kotlin
+fun batmanFinder(batmanActors: list): string {
+	val theFirstBatman = batmanActors.find { actor -> "Michael Keaton".equals(actor) }
+	return theFirstBatman
+}
+```
+
+A **function call** is performed by passing in a value for each input parameter required by the function:
+
+```kotlin
+val batmans = listOf("Christian Bale", "Michael Keaton", "Ben Affleck", "George Clooney")
+
+firstBatman = batmanFinder(batmans)
+```
+
+### Function Types
+
+In Kotlin, functions have defined types, determined by the data types of inputs and outputs. A function that accepts a list input and returns a string will have type `(List) -> String`, *i.e.* it's "a function from List to String"; if a function has type `(Int) -> Long` it means it accepts an Int as input and returns a Long, thus it's  "a function from Int to Long".
+
+> The concept of "Function Type" is important in the context of *functional programming*.
