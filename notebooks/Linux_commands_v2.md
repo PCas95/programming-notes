@@ -1,4 +1,4 @@
-# LIST OF GNU/LINUX BASH COMMANDS AND FEATURES
+# Bash Commands and Features of the GNU/Linux Environment 
 
 ## Wildcards, expansions and autofill
 
