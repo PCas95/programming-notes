@@ -20,12 +20,11 @@ In Bash, either single brackets or double brackets can be used in `if` condition
 
 | Feature                     | `[ ... ]` (POSIX)        | `[[ ... ]]` (Bash)   |
 | --------------------------- | ------------------------ | -------------------- |
-| Logical operators           | No                       | Yes                  |
-| Regex matching (`=~`)       | No                       | Yes                  |
+| Logical operators           | Not supported            | Yes                  |
+| Regex matching (`=~`)       | Not supported            | Yes                  |
 | `<` and `>` for strings     | Needs escaping (`\>`)    | No escaping needed   |
-| Supports wildcards (`*`)    | No                       | Yes                  |
+| Supports wildcards (`*`)    | Not supported            | Yes                  |
 | Works in all shells         | Yes                      | Bash/Ksh only        |
-
 
 ## String Comparison
 
