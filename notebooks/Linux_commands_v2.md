@@ -207,7 +207,7 @@ It stands for the exit status of the last run command (often used with `echo` in
 
 > In Bash and in scripting in general, commands and programs have an exit status which tells whether the process was executed successfully (exit status 0) or an error occurred (process execution unsuccessful, exit status >0). This is the general practice, but for scripts we can actually include in the code a customised and more explicative error management with different error codes and associated messages).
 
-## - Streams and redirections
+## Streams and redirections
 
 ### `|`
 
@@ -301,7 +301,7 @@ Example:
 program1 input_file | tee intermediate_file.txt | program2 > results.txt
 ```
 
-## - Command Substitution
+## Command Substitution
 
 In UNIX systems, commands (and their outputs) can be integrated into other lines of commands; to accomplish that, we use *Command Substitution*, which means that we put a command inside another command using a specific syntax: the `$` symbol followed a [subshell](#subshell-commands_here), which means by parentheses containing the command we want to put into the second one.
 
@@ -317,7 +317,7 @@ The first example uses Command Substitution in an `echo` command to return the n
 
 The second example uses `mkdir` to create a directory with current date as suffix, using command substitution with the command [`date`](#date), which returns current date in the specified format (in this case, `+%F` means *yyyy-mm-dd* format). A good idea is to merge this trick with the [creation of directory structure](#mkdir).
 
-## - Process Substitution and FIFOs
+## Process Substitution and FIFOs
 
 ### FIFOs
 
@@ -375,7 +375,6 @@ diff -y tot-pdf-samn.lst <(cut -f1 downloaded_samples-FILT.tsv)
 
 ## Variables, arrays and loops
 
-
 ### Variables
 
 Variables work like in any scripting language, being assigned with the assignment operator `=`. In Bash though, variables don't require a prefix when they are being set, but they do require a prefix `$` symbol when they are being referenced/invoked.
@@ -428,7 +427,7 @@ There are different ways to reference variables in Bash: `$a`, `"$a"`, `${a}` an
 
 Using `$` is always necessary to reference variables after they have been assigned. Many programs will require to use quotes to expand variables: in such cases double quotes are to be used (single quotes prevent variable expansion)
 
-As for the curly braces, most of the times are used for need of delimiters, so that if a variable has to be written attached a string, Bash can distinguish the variable from the rest of the string:
+As for the curly braces, they act as delimiters, so that if a variable has to be written attached to a string, Bash can distinguish the variable from the rest of the string:
 
 ```bash
 for i in $(cat prj-directories.lst); do
@@ -442,7 +441,7 @@ Using both double quotes and curly braces may be necessary for the same purpose,
 
 #### Parameter Expansion
 
-Another important use of braces is parameter expansion: some symbols can be put inside braces, together with the variable name, to perform some actions on the value stored in the variable:
+Another important use of braces is parameter expansion: some symbols have a special meaning inside braces, and are used to modify the value stored in the variable:
 
 ```bash
 ${a%.fasta}
@@ -461,13 +460,16 @@ ${name,}
 ${name,,}
 ```
 
-The `^` symbol is used to convert the first character of any string to uppercase, while the `^^` symbol is used to convert the whole string to uppercase.
+**Summary:**
 
-The `,` symbol is used to convert the first character of the string to lowercase, while `,,` converts the whole string to lowercase.
+- The `^` symbol is used to convert the first character of any string to uppercase, while the `^^` symbol is used to convert the whole string to uppercase.
+- The `,` symbol is used to convert the first character of the string to lowercase, while `,,` converts the whole string to lowercase.
+- The `#` symbol is used to remove a substring from the beginning of the value stored in the variable. Using `#` removes up to the first match from the beginning of the string, while using `##` removes up to the last match. 
+- The `%` symbol is used to remove a substring from the end of the value stored in the variable. Using `%` removes up to the first match from the end of the string, while using `%%` removes up to the last match (goiong towards the beginning of the string).
 
 ### Arrays
 
-Arrays are data types equal to Perl's arrays and Python's lists. They store a list of values and their assignment is similar to Perl's:
+An **array** is a **data type** which stores a list of other values. Elements in the list are separated by a single blank space:
 
 ```bash
 tmnts=("Leo" "Don" "Raph" "Mikey")
@@ -475,9 +477,9 @@ tmnts=("Leo" "Don" "Raph" "Mikey")
 
 Bash does not typically require curly braces to reference variables, but it does for arrays, which are consequently referenced as `${array}` or `${array[@]}`. The `@` symbol in square brackets instructs to access all the elements in the array. Without it, only the first element in the array would be accessed.
 
-Like for all scripting languages, specific elements of an array are retrieved using the corresponding index number in square brackets. Using `[@]` will retrieve the whole array.
+Specific elements of an array are retrieved using the corresponding **index number** in square brackets. Using `[@]` will retrieve the whole array.
 
-To Access an Array in Bash, it can be given as output in its entirety, a specific element can be accessed through its index, or the array can be looped through.
+To access an Array in Bash, it can be given as output in its entirety, a specific element can be accessed through its index, or the array can be looped through.
 
 There are 2 main ways to loop through an array:
 
@@ -532,8 +534,9 @@ ps -aux | grep <program_name>
 ps -f | grep <user_name>
 ```
 
-> `ps` can provide a list of all processes (`a` or `e` flag) in full-list format (`f` flag). Both `ps -aux` and  `ps -ef` are often used together with `grep` to filter the desired process, in order to know its PID or other information. \
->The syntaxes in the first 2 examples are largely equivalent, but output mildly different field format (`-aux` is legacy BSD-like syntax added to facilitate transition to more modern options).
+> `ps` can provide a list of all processes (`a` or `e` flag) in full-list format (`f` flag). Both `ps -aux` and  `ps -ef` are often used together with `grep` to filter the desired process, in order to know its PID or other information.
+> 
+> The syntaxe in the first 2 examples are largely equivalent, but output mildly different field format (`-aux` is legacy BSD-like syntax added to facilitate transition to more modern options).
 
 `ps -aux`:
 
@@ -553,7 +556,7 @@ If `ps` is invoked with no flags, a simple list of main processes rooted at curr
    4324 pts/1    00:00:00 ps
 ```
 
->When using `ps -ef`, the column CMD shows the actual process or command, which could be useful to get the command to invoke the program from terminal (needs confirmation).
+> When using `ps -ef`, the column CMD shows the actual process or command, which could be useful to get the command to invoke the program from terminal (needs confirmation).
 
 The `-p` flag can be used to get the name of a program, by specifying a PID:
 
@@ -580,11 +583,11 @@ Enhanced version of the `top` command, it's an interactive viewer, but it's not 
 
 #### `pidof <program_name>`
 
-Returns the PID of the specified running program. The name a program has while running may be different from its full commercial name (*e.g.*: `subl` for SublimeText).
+Returns the PID of the specified running program. The name a program has while running may be different from its full commercial name (*e.g.*: `subl` for "SublimeText").
 
 #### `pgrep <process_name>`
 
-Finds the PID of the specified process (note: process name can be different than the program name).
+Finds the PID of the specified process (note: process name can be different from the program name).
 
 ### - Killing processes
 
@@ -602,7 +605,7 @@ Kills a process through UI interaction.
 
 #### `killall`
 
-Kills all the running processes that match the specified name or characteristic (like user). See manual for flags and modifiers.
+Kills all the running processes that match the specified name or characteristic (like "user"). See manual for flags and modifiers.
 
 ### `jobs`-related commands
 
@@ -766,7 +769,7 @@ Where:
 
 More than one option and mode can be given at once, by separating them with commas (no spaces). If no option is given, by default `chmod` executes as `a`.
 
-**Use `chmod +x <file_name>` to simply make the file executable (for all users).**
+**Use `chmod +x <file_name>` to simply make the file executable for all users.**
 
 Examples:
 
@@ -778,7 +781,7 @@ chmod u=rwx,g=rx,o=r file.py
 
 ### `chown`
 
-Change ownership of the specified file(s) or directory/ies to you (requires sudo). Useful for tranferred files.
+Change ownership of the specified file(s) or directory/ies to current user (requires sudo). Useful for tranferred files.
 
 ### `find`
 
@@ -806,7 +809,7 @@ As demonstrated in the examples above, `find` will require a path (can go from r
 
 ### `sudo`
 
-"**S**uper **u**ser **do**": executes the following command or program with super user privileges.
+"**S**uper **U**ser **DO**": executes the following command or program with super user privileges.
 
 ### `su`
 
@@ -860,7 +863,7 @@ Utility to convert DOS metacharacters in a text file to UNIX metacharacters. Not
 
 ### `seq`
 
-Prints a sequence of numbers from the first to the second specified number. Like list-returning functions in Python, it is very useful to create the list through which to iterate in a `for` loop in Bash:
+Prints a sequence of numbers from the first to the second specified number. It is very useful to create the list to iterate through in a `for` loop:
 
 ```bash
 for i in $(seq 1 $col); do
@@ -1132,8 +1135,6 @@ Prints information about PCI devices. Use `-v` to get detailed info for each con
 
 Shows all scsi/sata devices (SATA disks and cd/dvd units). Use `-s` flag to show size too.
 
-
-
 ### `which` 
 
 Prints the path of a shell program. Useful to find if a command is a program ([aliases](#alias) are not programs on their own, so they return no path).
@@ -1308,7 +1309,6 @@ As in the example above, the most common options combination is `-avz`, where `-
     scp cool_stuff.txt 192.168.237.42:/home/user_name/folder_for_cool_stuff/.
 
     scp p.castelli@gtc-collab-int:/home/IZSNT/p.castelli/20220923-Machine-Learning/ML-samples/dataframe/total_dataframe-h.tsv /home/pierluigi/Downloads/.
-
 
 ### `ssh`
 
@@ -1824,9 +1824,9 @@ Simple tool to install .deb packages from local. It automatically installs and r
 
 It's always worth to try install a .deb package with `gdebi` before going through the hassle of installing it with [`make install`](#sudo-make-install-package_name), since some softwares are distributed without any `configure` or `autogen` file nor any information on how to retrieve the package dependencies (a very bad practice from some who bild installation packages from source).
 
+---
 
-
-
+## Useful Links
 
 more on: <https://www.ubuntubeginner.com/basic-ubuntu-commands-for-beginners/>
          <https://www.linux.org/pages/download/>
