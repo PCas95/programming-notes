@@ -20,4 +20,5 @@ Go to:
 
 More stuff:
 
-* [Mermaid examples](notebooks//mermaid_examples.md)
+* [Mermaid examples](notebooks/mermaid_examples.md)
+* [Python ETE3 - phylogeny visualisation examples](notebooks/ete3_examples.md)
