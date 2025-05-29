@@ -22,3 +22,7 @@ More stuff:
 
 * [Mermaid examples](notebooks/mermaid_examples.md)
 * [Python ETE3 - phylogeny visualisation examples](notebooks/ete3_examples.md)
+
+Esempi per Valentina:
+
+* [generazione dinamica comandi in Bash](notebooks/tmp.md)
