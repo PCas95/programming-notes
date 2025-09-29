@@ -12,6 +12,7 @@ Go to:
 * [Python notes](notebooks/Python_notes.md)
 * [Snakemake notes](notebooks/snakemake_notes.md)
 * [Extended Regular Expressions](notebooks/Regular_expressions.md)
+* [Git commands](notebooks/git_commands.md)
 * [Useful Bash one-liners](notebooks/useful_commands.md)
 * [Pandoc commands](notebooks/pandoc_commands.md)
 * [notes to be integrated into Python notes](./notes.md)
