@@ -465,7 +465,30 @@ ${name,,}
 - The `^` symbol is used to convert the first character of any string to uppercase, while the `^^` symbol is used to convert the whole string to uppercase.
 - The `,` symbol is used to convert the first character of the string to lowercase, while `,,` converts the whole string to lowercase.
 - The `#` symbol is used to remove a substring from the beginning of the value stored in the variable. Using `#` removes up to the first match from the beginning of the string, while using `##` removes up to the last match. 
-- The `%` symbol is used to remove a substring from the end of the value stored in the variable. Using `%` removes up to the first match from the end of the string, while using `%%` removes up to the last match (goiong towards the beginning of the string).
+- The `%` symbol is used to remove a substring from the end of the value stored in the variable. Using `%` removes up to the first match from the end of the string, while using `%%` removes up to the last match (going towards the beginning of the string).
+
+**Bash parameter expansion with pattern substitution** (aka *string replacement expansion*):
+
+```bash
+${var/pattern/replacement}
+```
+
+Where:
+
+- `var`: the variable being expanded
+- `pattern`: the part to match
+- `replacement`: what to replace the match with
+
+Parameter expansion with pattern substitution replaces the first encountered match with the specified replacement string.
+
+Example:
+
+```bash
+${f/_fastp_1.fastq.gz/_R1.fastq.gz}
+```
+
+This would expand the variable `$f` and also replace `_fastp_1.fastq.gz` in `$f` with the string `_R1.fastq.gz`.
+
 
 ### Arrays
 
@@ -528,7 +551,7 @@ Provides a snapshot list of current processes. \
 Common syntaxes:
 
 ```bash
-ps -ef
+ps -ef`
 ps -aux
 ps -aux | grep <program_name>
 ps -f | grep <user_name>
